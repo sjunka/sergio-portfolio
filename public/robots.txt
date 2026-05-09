@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sjunka.github.io/sergio-portfolio/sitemap.xml
