@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { ArrowDown, Mail, Download, ArrowRight } from "lucide-react";
 import { LinkedInIcon, GitHubIcon } from "@/components/shared/BrandIcons";
 import { personal } from "@/data/personal";
@@ -40,12 +40,12 @@ export function Hero() {
 
       {/* Glowing orbs */}
       <div
-        className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full opacity-10 blur-3xl pointer-events-none"
+        className="absolute top-1/4 left-1/4 size-64 rounded-full opacity-10 blur-3xl pointer-events-none"
         style={{ background: "hsl(var(--primary))" }}
         aria-hidden="true"
       />
       <div
-        className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full opacity-[0.07] blur-3xl pointer-events-none"
+        className="absolute bottom-1/3 right-1/4 size-80 rounded-full opacity-[0.07] blur-3xl pointer-events-none"
         style={{ background: "hsl(271 91% 65%)" }}
         aria-hidden="true"
       />
@@ -53,19 +53,19 @@ export function Hero() {
       {/* Content */}
       <div className="relative z-10 max-w-4xl w-full text-center">
         {/* Tag */}
-        <motion.div {...fadeUp(0.1)}>
+        <m.div {...fadeUp(0.1)}>
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase border border-primary/30 bg-primary/10 text-primary mb-6">
-            <span className="relative flex h-2 w-2">
+            <span className="relative flex size-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+              <span className="relative inline-flex rounded-full size-2 bg-primary" />
             </span>
             Open to Senior & SSR Roles
           </span>
-        </motion.div>
+        </m.div>
 
         {/* Name */}
-        <motion.div {...fadeUp(0.2)}>
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-foreground mb-4 leading-none">
+        <m.div {...fadeUp(0.2)}>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold tracking-tight text-foreground mb-4 leading-none">
             Sergio{" "}
             <span
               className="text-transparent bg-clip-text"
@@ -77,17 +77,17 @@ export function Hero() {
               Junca
             </span>
           </h1>
-        </motion.div>
+        </m.div>
 
         {/* Title */}
-        <motion.div {...fadeUp(0.35)}>
+        <m.div {...fadeUp(0.35)}>
           <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground mb-3">
             Senior Mobile Engineer
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Subtitle pill row */}
-        <motion.div
+        <m.div
           {...fadeUp(0.45)}
           className="flex flex-wrap items-center justify-center gap-2 mb-8"
         >
@@ -101,23 +101,23 @@ export function Hero() {
               </span>
             ),
           )}
-        </motion.div>
+        </m.div>
 
         {/* Summary */}
-        <motion.div {...fadeUp(0.55)}>
+        <m.div {...fadeUp(0.55)}>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">
             Building production-grade cross-platform mobile apps across{" "}
             <strong className="text-foreground font-medium">
               fintech, gaming, healthcare,
             </strong>{" "}
             and{" "}
-            <strong className="text-foreground font-medium">logistics</strong> —
+            <strong className="text-foreground font-medium">logistics</strong>,{" "}
             from architecture to App Store.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* CTAs */}
-        <motion.div
+        <m.div
           {...fadeUp(0.65)}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
         >
@@ -148,10 +148,10 @@ export function Hero() {
             <Download size={16} aria-hidden="true" />
             Download CV
           </a>
-        </motion.div>
+        </m.div>
 
         {/* Socials */}
-        <motion.nav {...fadeUp(0.75)} aria-label="Social links">
+        <m.nav {...fadeUp(0.75)} aria-label="Social links">
           <ul className="flex items-center justify-center gap-3" role="list">
             {socials.map(({ Icon, label, href }) => (
               <li key={label}>
@@ -174,11 +174,11 @@ export function Hero() {
               </li>
             ))}
           </ul>
-        </motion.nav>
+        </m.nav>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
+      <m.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground"
         initial={prefersReduced ? {} : { opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -186,13 +186,13 @@ export function Hero() {
         aria-hidden="true"
       >
         <span className="text-xs tracking-widest uppercase">Scroll</span>
-        <motion.div
+        <m.div
           animate={prefersReduced ? {} : { y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
         >
           <ArrowDown size={16} />
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </section>
   );
 }

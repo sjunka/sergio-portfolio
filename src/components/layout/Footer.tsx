@@ -20,7 +20,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn profile"
-                className="h-8 w-8 flex items-center justify-center rounded-md text-muted-foreground hover:text-primary transition-colors"
+                className="size-8 flex items-center justify-center rounded-md text-muted-foreground hover:text-primary transition-colors"
               >
                 <LinkedInIcon size={16} />
               </a>
@@ -31,7 +31,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub profile"
-                className="h-8 w-8 flex items-center justify-center rounded-md text-muted-foreground hover:text-primary transition-colors"
+                className="size-8 flex items-center justify-center rounded-md text-muted-foreground hover:text-primary transition-colors"
               >
                 <GitHubIcon size={16} />
               </a>
@@ -40,7 +40,7 @@ export function Footer() {
               <a
                 href={`mailto:${personal.email}`}
                 aria-label="Send email"
-                className="h-8 w-8 flex items-center justify-center rounded-md text-muted-foreground hover:text-primary transition-colors"
+                className="size-8 flex items-center justify-center rounded-md text-muted-foreground hover:text-primary transition-colors"
               >
                 <Mail size={16} aria-hidden="true" />
               </a>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Mail, MapPin, Send, CheckCircle2, AlertCircle } from 'lucide-react'
 import { LinkedInIcon } from '@/components/shared/BrandIcons'
 import { SectionHeading } from '@/components/shared/SectionHeading'
@@ -83,17 +83,17 @@ export function Contact() {
           {/* Left — contact info */}
           <AnimatedSection direction="left" className="space-y-6">
             <div>
-              <h3 className="text-xl font-bold text-foreground mb-2">Get in touch</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-2">Get in touch</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 Whether you're hiring for a senior mobile role, need consulting on a React Native
-                architecture, or just want to connect — I'd love to hear from you.
+                architecture, or just want to connect. I'd love to hear from you.
               </p>
             </div>
 
             <ul className="space-y-4" role="list">
               {contactInfo.map(({ Icon, label, value, href }) => (
                 <li key={label} className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <div className="size-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <Icon size={18} className="text-primary" aria-hidden="true" />
                   </div>
                   <div>
@@ -119,9 +119,9 @@ export function Contact() {
 
             {/* Availability badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-sm font-medium">
-              <span className="relative flex h-2 w-2" aria-hidden="true">
+              <span className="relative flex size-2" aria-hidden="true">
                 <span className="animate-ping absolute h-full w-full rounded-full bg-emerald-500 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
               </span>
               Available for new opportunities
             </div>
@@ -216,7 +216,7 @@ export function Contact() {
               </div>
 
               {/* Submit */}
-              <motion.button
+              <m.button
                 type="submit"
                 disabled={isSubmitting}
                 whileHover={prefersReduced ? undefined : { scale: 1.02 }}
@@ -231,12 +231,12 @@ export function Contact() {
               >
                 <Send size={16} aria-hidden="true" />
                 {isSubmitting ? 'Opening mail client...' : 'Send Message'}
-              </motion.button>
+              </m.button>
 
               {/* Status messages */}
               <AnimatePresence>
                 {submitState === 'success' && (
-                  <motion.div
+                  <m.div
                     role="status"
                     aria-live="polite"
                     initial={prefersReduced ? {} : { opacity: 0, y: 10 }}
@@ -246,10 +246,10 @@ export function Contact() {
                   >
                     <CheckCircle2 size={16} aria-hidden="true" />
                     Message ready to send in your mail client.
-                  </motion.div>
+                  </m.div>
                 )}
                 {submitState === 'error' && (
-                  <motion.div
+                  <m.div
                     role="alert"
                     aria-live="assertive"
                     initial={prefersReduced ? {} : { opacity: 0, y: 10 }}
@@ -259,7 +259,7 @@ export function Contact() {
                   >
                     <AlertCircle size={16} aria-hidden="true" />
                     Something went wrong. Please email directly at {personal.email}
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             </form>

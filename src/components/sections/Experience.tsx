@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Briefcase, ExternalLink } from 'lucide-react'
 import { SectionHeading } from '@/components/shared/SectionHeading'
@@ -36,7 +36,7 @@ function TimelineCard({
       )}
     >
       {/* Card */}
-      <motion.div
+      <m.div
         className={cn('w-full md:w-[calc(50%-2.5rem)]', isEven ? 'md:text-right' : 'md:text-left')}
         initial={prefersReduced ? {} : { opacity: 0, x: isEven ? -50 : 50 }}
         animate={inView || prefersReduced ? { opacity: 1, x: 0 } : {}}
@@ -72,7 +72,7 @@ function TimelineCard({
               )}
             </div>
 
-            <h3 className="text-base sm:text-lg font-bold text-foreground leading-tight">
+            <h3 className="text-base sm:text-lg font-semibold text-foreground leading-tight">
               {exp.role}
             </h3>
 
@@ -94,19 +94,19 @@ function TimelineCard({
 
           {/* Bullets */}
           <ul className={cn('space-y-2', isEven ? 'md:text-right' : 'md:text-left')} role="list">
-            {exp.bullets.map((bullet, i) => (
-              <li key={i} className="text-sm text-muted-foreground leading-relaxed flex gap-2 md:items-start">
+            {exp.bullets.map((bullet) => (
+              <li key={bullet} className="text-sm text-muted-foreground leading-relaxed flex gap-2 md:items-start">
                 <span className="text-primary mt-1.5 flex-shrink-0 text-xs" aria-hidden="true">▹</span>
                 <span>{bullet}</span>
               </li>
             ))}
           </ul>
         </article>
-      </motion.div>
+      </m.div>
 
       {/* Center dot — desktop */}
       <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-6 flex-col items-center z-10">
-        <div className={cn('relative h-5 w-5 rounded-full border-2 border-primary bg-background')}>
+        <div className={cn('relative size-5 rounded-full border-2 border-primary bg-background')}>
           {exp.isCurrent && (
             <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-50" aria-hidden="true" />
           )}
@@ -116,7 +116,7 @@ function TimelineCard({
 
       {/* Mobile dot */}
       <div className="absolute left-0 top-6 md:hidden flex items-center z-10">
-        <div className="relative h-5 w-5 rounded-full border-2 border-primary bg-background">
+        <div className="relative size-5 rounded-full border-2 border-primary bg-background">
           {exp.isCurrent && (
             <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-50" aria-hidden="true" />
           )}
