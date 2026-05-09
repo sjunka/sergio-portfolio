@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 import { Smartphone, Globe, Zap, Shield } from 'lucide-react'
 import { SectionHeading } from '@/components/shared/SectionHeading'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
@@ -55,7 +55,7 @@ function PhoneMockup() {
       </div>
 
       {/* Phone body */}
-      <motion.div
+      <m.div
         animate={prefersReduced ? {} : { y: [0, -8, 0] }}
         transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
         className="relative z-10 w-[180px] h-[360px] bg-card border-2 border-border rounded-[36px] shadow-2xl flex flex-col overflow-hidden"
@@ -71,7 +71,7 @@ function PhoneMockup() {
         {/* Screen content */}
         <div className="flex-1 bg-gradient-to-br from-background to-secondary/40 flex flex-col items-center justify-center px-4 gap-4">
           {/* App icon */}
-          <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shadow-lg">
+          <div className="size-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shadow-lg">
             <Smartphone size={28} className="text-primary" aria-hidden="true" />
           </div>
 
@@ -102,50 +102,50 @@ function PhoneMockup() {
 
         {/* Bottom tab bar */}
         <div className="h-12 bg-card/80 border-t border-border flex items-center justify-around px-6">
-          <div className="w-5 h-5 rounded bg-primary/30" />
-          <div className="w-5 h-5 rounded bg-muted/50" />
-          <div className="w-5 h-5 rounded bg-muted/50" />
+          <div className="size-5 rounded bg-primary/30" />
+          <div className="size-5 rounded bg-muted/50" />
+          <div className="size-5 rounded bg-muted/50" />
         </div>
 
         {/* Home indicator */}
         <div className="flex justify-center py-2">
           <div className="w-10 h-1 bg-border rounded-full" />
         </div>
-      </motion.div>
+      </m.div>
 
       {/* Floating badges */}
-      <motion.div
+      <m.div
         animate={prefersReduced ? {} : { y: [0, -5, 0] }}
         transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut', delay: 0.5 }}
         className="absolute left-2 top-20 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-500 border border-blue-500/20 shadow-sm whitespace-nowrap"
         aria-hidden="true"
       >
         iOS
-      </motion.div>
-      <motion.div
+      </m.div>
+      <m.div
         animate={prefersReduced ? {} : { y: [0, -5, 0] }}
         transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut', delay: 1 }}
         className="absolute right-0 top-40 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 shadow-sm whitespace-nowrap"
         aria-hidden="true"
       >
         Android
-      </motion.div>
-      <motion.div
+      </m.div>
+      <m.div
         animate={prefersReduced ? {} : { y: [0, -5, 0] }}
         transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut', delay: 0.2 }}
         className="absolute left-0 bottom-32 px-3 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20 shadow-sm whitespace-nowrap"
         aria-hidden="true"
       >
         React Native
-      </motion.div>
-      <motion.div
+      </m.div>
+      <m.div
         animate={prefersReduced ? {} : { y: [0, -5, 0] }}
         transition={{ repeat: Infinity, duration: 3.2, ease: 'easeInOut', delay: 1.5 }}
         className="absolute right-2 bottom-20 px-3 py-1.5 rounded-full text-xs font-semibold bg-violet-500/10 text-violet-500 border border-violet-500/20 shadow-sm whitespace-nowrap"
         aria-hidden="true"
       >
         TypeScript
-      </motion.div>
+      </m.div>
     </div>
   )
 }
@@ -185,7 +185,7 @@ export function Mobile() {
               {/* Highlights */}
               <div className="space-y-3">
                 {mobileHighlights.map(({ icon: Icon, title, description, color, bg }) => (
-                  <motion.div
+                  <m.div
                     key={title}
                     whileHover={{ x: 4 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
@@ -198,7 +198,7 @@ export function Mobile() {
                       <h3 className="font-semibold text-foreground text-sm mb-0.5">{title}</h3>
                       <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
                     </div>
-                  </motion.div>
+                  </m.div>
                 ))}
               </div>
 

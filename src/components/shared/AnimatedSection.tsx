@@ -1,5 +1,4 @@
-import { useRef } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { cn } from '@/lib/utils'
 
@@ -37,7 +36,7 @@ export function AnimatedSection({
       : { opacity: 0, ...directionMap[direction] }
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       initial={initial}
       animate={animate}
@@ -45,7 +44,7 @@ export function AnimatedSection({
       className={cn(className)}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -60,7 +59,7 @@ export function StaggerContainer({ children, className, staggerDelay = 0.08 }: S
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 })
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={cn(className)}
       initial="hidden"
@@ -71,7 +70,7 @@ export function StaggerContainer({ children, className, staggerDelay = 0.08 }: S
       }}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -79,7 +78,7 @@ export function StaggerItem({ children, className }: { children: React.ReactNode
   const prefersReduced = useReducedMotion()
 
   return (
-    <motion.div
+    <m.div
       className={cn(className)}
       variants={
         prefersReduced
@@ -91,11 +90,7 @@ export function StaggerItem({ children, className }: { children: React.ReactNode
       }
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
-// Ref-based wrapper to share ref with useInView externally
-export function useAnimatedRef() {
-  return useRef(null)
-}

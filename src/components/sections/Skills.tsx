@@ -49,7 +49,7 @@ export function Skills() {
                     <div className="p-2 rounded-lg bg-secondary">
                       <Icon size={20} className={group.colorClass} aria-hidden />
                     </div>
-                    <h3 className="font-bold text-foreground">{group.category}</h3>
+                    <h3 className="font-semibold text-foreground">{group.category}</h3>
                   </div>
 
                   {/* Skill badges */}

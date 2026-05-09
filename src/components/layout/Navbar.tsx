@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { Menu, X, Download } from 'lucide-react'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
 import { personal } from '@/data/personal'
@@ -91,7 +91,7 @@ export function Navbar() {
                 >
                   {link.label}
                   {activeSection === link.href.slice(1) && (
-                    <motion.span
+                    <m.span
                       layoutId="nav-indicator"
                       className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-primary"
                     />
@@ -122,7 +122,7 @@ export function Navbar() {
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
-              className="md:hidden h-9 w-9 flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              className="md:hidden size-9 flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
             >
               {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -133,7 +133,7 @@ export function Navbar() {
       {/* Mobile menu overlay */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div
+          <m.div
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
@@ -147,7 +147,7 @@ export function Navbar() {
             <nav>
               <ul className="space-y-2" role="list">
                 {navLinks.map((link, i) => (
-                  <motion.li
+                  <m.li
                     key={link.href}
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -160,10 +160,10 @@ export function Navbar() {
                     >
                       {link.label}
                     </a>
-                  </motion.li>
+                  </m.li>
                 ))}
               </ul>
-              <motion.div
+              <m.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
@@ -178,9 +178,9 @@ export function Navbar() {
                   <Download size={16} aria-hidden="true" />
                   Download Resume
                 </a>
-              </motion.div>
+              </m.div>
             </nav>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

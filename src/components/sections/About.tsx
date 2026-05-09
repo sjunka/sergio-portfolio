@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { MapPin, Code2, Layers, Users } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
@@ -95,9 +95,9 @@ export function About() {
                 <img
                   src="/sergio-portfolio/avatar.png"
                   alt="Sergio Junca"
-                  className="w-48 h-48 rounded-2xl object-cover shadow-2xl"
+                  className="size-48 rounded-2xl object-cover shadow-2xl"
                 />
-                <div className="absolute -bottom-3 -right-3 h-10 w-10 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg">
+                <div className="absolute -bottom-3 -right-3 size-10 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg">
                   <span className="text-white text-lg" aria-hidden="true">
                     ✓
                   </span>
@@ -146,7 +146,7 @@ export function About() {
                   gaming, healthcare, and logistics industries.
                 </p>
                 <p>
-                  My expertise spans the full mobile lifecycle — from
+                  My expertise spans the full mobile lifecycle, from
                   architecture decisions and scalable component systems to CI/CD
                   pipelines, App Store deployments, and performance
                   optimization. I've led engineering teams, mentored developers,
@@ -166,7 +166,7 @@ export function About() {
               <div className="space-y-3">
                 {highlights.map(
                   ({ icon: Icon, title, description, color, bg }) => (
-                    <motion.div
+                    <m.div
                       key={title}
                       whileHover={{ x: 4 }}
                       transition={{
@@ -187,7 +187,7 @@ export function About() {
                           {description}
                         </p>
                       </div>
-                    </motion.div>
+                    </m.div>
                   ),
                 )}
               </div>
