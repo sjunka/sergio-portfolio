@@ -10,8 +10,8 @@ export const personal = {
   location: 'Colombia — Open to Remote',
   linkedin: 'https://www.linkedin.com/in/sjunka/',
   github: 'https://github.com/sjunka',
-  resumePdf: '/sergio-portfolio/sergio-junca-resume.pdf',
-  siteUrl: 'https://sjunka.github.io/sergio-portfolio/',
+  resumePdf: '/sergio-junca-resume.pdf',
+  siteUrl: 'https://sergiojunca.online/',
   stats: [
     { value: '10+', label: 'Years Experience' },
     { value: '5+', label: 'Industries' },

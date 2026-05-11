@@ -93,7 +93,7 @@ export function About() {
               {/* Avatar placeholder */}
               <div className="relative">
                 <img
-                  src="/sergio-portfolio/avatar.png"
+                  src="/avatar.png"
                   alt="Sergio Junca"
                   className="size-48 rounded-2xl object-cover shadow-2xl"
                 />
