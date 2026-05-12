@@ -1,6 +1,7 @@
 import { Moon, Sun } from 'lucide-react'
 import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useTheme } from '@/hooks/useTheme'
+import { useTranslation } from '@/hooks/useTranslation'
 import { cn } from '@/lib/utils'
 
 interface ThemeToggleProps {
@@ -9,12 +10,13 @@ interface ThemeToggleProps {
 
 export function ThemeToggle({ className }: ThemeToggleProps) {
   const { theme, toggleTheme } = useTheme()
+  const { t } = useTranslation()
   const prefersReduced = useReducedMotion()
 
   return (
     <button
       onClick={toggleTheme}
-      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-label={theme === 'dark' ? t.theme.toLight : t.theme.toDark}
       className={cn(
         'relative h-9 w-9 rounded-md flex items-center justify-center',
         'text-muted-foreground hover:text-foreground hover:bg-muted',

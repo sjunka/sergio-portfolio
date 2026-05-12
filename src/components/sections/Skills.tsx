@@ -2,6 +2,7 @@ import { Smartphone, Monitor, Network, GitBranch, Users, Sparkles, Server, type 
 import { SectionHeading } from '@/components/shared/SectionHeading'
 import { StaggerContainer, StaggerItem } from '@/components/shared/AnimatedSection'
 import { skillGroups } from '@/data/skills'
+import { useTranslation } from '@/hooks/useTranslation'
 import { cn } from '@/lib/utils'
 
 const iconMap: Record<string, LucideIcon> = {
@@ -15,6 +16,8 @@ const iconMap: Record<string, LucideIcon> = {
 }
 
 export function Skills() {
+  const { t } = useTranslation()
+
   return (
     <section
       id="skills"
@@ -23,9 +26,9 @@ export function Skills() {
     >
       <div className="max-w-6xl mx-auto">
         <SectionHeading
-          label="Core Skills"
-          title="Technologies I work with"
-          description="A decade of hands-on experience across the full mobile and frontend stack."
+          label={t.skills.label}
+          title={t.skills.title}
+          description={t.skills.description}
         />
 
         <StaggerContainer
@@ -34,6 +37,7 @@ export function Skills() {
         >
           {skillGroups.map(group => {
             const Icon = iconMap[group.icon] ?? Smartphone
+            const categoryLabel = t.skills.categories[group.icon] ?? group.category
             return (
               <StaggerItem key={group.category}>
                 <article
@@ -42,18 +46,18 @@ export function Skills() {
                     'hover:shadow-lg hover:border-primary/30 transition-all duration-300',
                     group.borderClass
                   )}
-                  aria-label={`${group.category} skills`}
+                  aria-label={`${categoryLabel} skills`}
                 >
                   {/* Header */}
                   <div className="flex items-center gap-3 mb-5">
                     <div className="p-2 rounded-lg bg-secondary">
                       <Icon size={20} className={group.colorClass} aria-hidden />
                     </div>
-                    <h3 className="font-semibold text-foreground">{group.category}</h3>
+                    <h3 className="font-semibold text-foreground">{categoryLabel}</h3>
                   </div>
 
                   {/* Skill badges */}
-                  <ul className="flex flex-wrap gap-2" role="list" aria-label={`${group.category} skill list`}>
+                  <ul className="flex flex-wrap gap-2" role="list" aria-label={`${categoryLabel} skill list`}>
                     {group.skills.map(skill => (
                       <li key={skill}>
                         <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-secondary text-secondary-foreground border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors cursor-default">

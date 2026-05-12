@@ -3,6 +3,8 @@ import { useInView } from 'react-intersection-observer'
 import { Briefcase, ExternalLink } from 'lucide-react'
 import { SectionHeading } from '@/components/shared/SectionHeading'
 import { experiences } from '@/data/experience'
+import { useTranslation } from '@/hooks/useTranslation'
+import type { Translations } from '@/i18n'
 import { cn } from '@/lib/utils'
 
 const industryColorMap: Record<string, string> = {
@@ -18,14 +20,20 @@ const industryColorMap: Record<string, string> = {
 function TimelineCard({
   exp,
   index,
+  t,
 }: {
   exp: (typeof experiences)[number]
   index: number
+  t: Translations
 }) {
   const prefersReduced = useReducedMotion()
   const isEven = index % 2 === 0
 
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.15 })
+
+  const item = t.experience.items[exp.id]
+  const role = item?.role ?? exp.role
+  const bullets = item?.bullets ?? exp.bullets
 
   return (
     <li
@@ -46,7 +54,7 @@ function TimelineCard({
           className={cn(
             'p-5 sm:p-6 rounded-2xl bg-card border border-border',
             'hover:border-primary/40 hover:shadow-lg transition-all duration-300',
-            'ml-10 md:ml-0' // mobile offset for timeline dot
+            'ml-10 md:ml-0'
           )}
         >
           {/* Header */}
@@ -62,24 +70,24 @@ function TimelineCard({
               </span>
               {exp.type === 'Contract' && (
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold border bg-secondary text-secondary-foreground border-border">
-                  Contract
+                  {t.experience.contract}
                 </span>
               )}
               {exp.isCurrent && (
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                  Current
+                  {t.experience.current}
                 </span>
               )}
             </div>
 
             <h3 className="text-base sm:text-lg font-semibold text-foreground leading-tight">
-              {exp.role}
+              {role}
             </h3>
 
             <div>
               <span className="font-semibold text-primary">{exp.company}</span>
               {exp.client && (
-                <span className="text-sm text-muted-foreground"> · Client: {exp.client}</span>
+                <span className="text-sm text-muted-foreground"> · {t.experience.client}: {exp.client}</span>
               )}
             </div>
 
@@ -94,7 +102,7 @@ function TimelineCard({
 
           {/* Bullets */}
           <ul className={cn('space-y-2', isEven ? 'md:text-right' : 'md:text-left')} role="list">
-            {exp.bullets.map((bullet) => (
+            {bullets.map((bullet) => (
               <li key={bullet} className="text-sm text-muted-foreground leading-relaxed flex gap-2 md:items-start">
                 <span className="text-primary mt-1.5 flex-shrink-0 text-xs" aria-hidden="true">▹</span>
                 <span>{bullet}</span>
@@ -131,13 +139,15 @@ function TimelineCard({
 }
 
 export function Experience() {
+  const { t } = useTranslation()
+
   return (
     <section id="experience" aria-labelledby="experience-heading" className="py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <SectionHeading
-          label="Experience"
-          title="10+ years of mobile engineering"
-          description="A track record of delivering production-grade React Native apps across industries and geographies."
+          label={t.experience.label}
+          title={t.experience.title}
+          description={t.experience.description}
         />
 
         <div className="mt-16 relative">
@@ -147,9 +157,9 @@ export function Experience() {
             aria-hidden="true"
           />
 
-          <ol className="relative space-y-10 md:space-y-16" aria-label="Work experience timeline">
+          <ol className="relative space-y-10 md:space-y-16" aria-label={t.experience.timeline}>
             {experiences.map((exp, i) => (
-              <TimelineCard key={exp.id} exp={exp} index={i} />
+              <TimelineCard key={exp.id} exp={exp} index={i} t={t} />
             ))}
           </ol>
         </div>
@@ -160,7 +170,7 @@ export function Experience() {
             className="inline-flex items-center gap-2 text-sm text-primary hover:underline font-medium"
           >
             <ExternalLink size={14} aria-hidden="true" />
-            Interested in working together?
+            {t.experience.cta}
           </a>
         </div>
       </div>

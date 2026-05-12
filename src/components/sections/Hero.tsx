@@ -2,16 +2,18 @@ import { m, useReducedMotion } from "framer-motion";
 import { ArrowDown, Mail, Download, ArrowRight } from "lucide-react";
 import { LinkedInIcon, GitHubIcon } from "@/components/shared/BrandIcons";
 import { personal } from "@/data/personal";
+import { useTranslation } from "@/hooks/useTranslation";
 import { cn } from "@/lib/utils";
 
-const socials = [
-  { Icon: LinkedInIcon, label: "LinkedIn", href: personal.linkedin },
-  { Icon: GitHubIcon, label: "GitHub", href: personal.github },
-  { Icon: Mail, label: "Email", href: `mailto:${personal.email}` },
-];
-
 export function Hero() {
+  const { t } = useTranslation();
   const prefersReduced = useReducedMotion();
+
+  const socials = [
+    { Icon: LinkedInIcon, label: t.hero.linkedin, href: personal.linkedin },
+    { Icon: GitHubIcon, label: t.hero.github, href: personal.github },
+    { Icon: Mail, label: t.hero.email, href: `mailto:${personal.email}` },
+  ];
 
   const fadeUp = (delay: number) => ({
     initial: prefersReduced ? {} : { opacity: 0, y: 30 },
@@ -22,7 +24,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      aria-label="Introduction"
+      aria-label={t.hero.intro}
       className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden"
     >
       {/* Animated mesh gradient background */}
@@ -59,7 +61,7 @@ export function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
               <span className="relative inline-flex rounded-full size-2 bg-primary" />
             </span>
-            Open to Senior & SSR Roles
+            {t.hero.badge}
           </span>
         </m.div>
 
@@ -82,7 +84,7 @@ export function Hero() {
         {/* Title */}
         <m.div {...fadeUp(0.35)}>
           <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground mb-3">
-            Senior Mobile Engineer
+            {t.hero.jobTitle}
           </p>
         </m.div>
 
@@ -91,28 +93,24 @@ export function Hero() {
           {...fadeUp(0.45)}
           className="flex flex-wrap items-center justify-center gap-2 mb-8"
         >
-          {["React Native", "TypeScript", "iOS & Android", "10+ Years"].map(
-            (tag) => (
-              <span
-                key={tag}
-                className="px-3 py-1 rounded-full text-sm font-medium bg-secondary text-secondary-foreground border border-border"
-              >
-                {tag}
-              </span>
-            ),
-          )}
+          {t.hero.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-3 py-1 rounded-full text-sm font-medium bg-secondary text-secondary-foreground border border-border"
+            >
+              {tag}
+            </span>
+          ))}
         </m.div>
 
         {/* Summary */}
         <m.div {...fadeUp(0.55)}>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">
-            Building production-grade cross-platform mobile apps across{" "}
+            {t.hero.descPre}
             <strong className="text-foreground font-medium">
-              fintech, gaming, healthcare,
-            </strong>{" "}
-            and{" "}
-            <strong className="text-foreground font-medium">logistics</strong>,{" "}
-            from architecture to App Store.
+              {t.hero.descIndustries}
+            </strong>
+            {t.hero.descPost}
           </p>
         </m.div>
 
@@ -129,7 +127,7 @@ export function Hero() {
               "shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5",
             )}
           >
-            View My Work
+            {t.hero.viewWork}
             <ArrowRight
               size={16}
               className="group-hover:translate-x-1 transition-transform"
@@ -146,12 +144,12 @@ export function Hero() {
             )}
           >
             <Download size={16} aria-hidden="true" />
-            Download CV
+            {t.hero.downloadCV}
           </a>
         </m.div>
 
         {/* Socials */}
-        <m.nav {...fadeUp(0.75)} aria-label="Social links">
+        <m.nav {...fadeUp(0.75)} aria-label={t.nav.socialLinks}>
           <ul className="flex items-center justify-center gap-3" role="list">
             {socials.map(({ Icon, label, href }) => (
               <li key={label}>
@@ -185,7 +183,7 @@ export function Hero() {
         transition={{ delay: 1.2, duration: 0.6 }}
         aria-hidden="true"
       >
-        <span className="text-xs tracking-widest uppercase">Scroll</span>
+        <span className="text-xs tracking-widest uppercase">{t.hero.scroll}</span>
         <m.div
           animate={prefersReduced ? {} : { y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}

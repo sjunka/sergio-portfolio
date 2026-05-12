@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { LazyMotion, domMax } from 'framer-motion'
 import { HelmetProvider } from 'react-helmet-async'
+import { LanguageProvider } from '@/context/LanguageContext'
 import { SEOHead } from '@/components/shared/SEOHead'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
@@ -14,23 +15,25 @@ const Contact = lazy(() => import('@/components/sections/Contact').then(m => ({ 
 
 function App() {
   return (
-    <LazyMotion features={domMax}>
-      <HelmetProvider>
-        <SEOHead />
-        <Navbar />
-        <main id="main-content">
-          <Hero />
-          <Suspense fallback={<div className="h-24" />}>
-            <About />
-            <Skills />
-            <Experience />
-            <Mobile />
-            <Contact />
-          </Suspense>
-        </main>
-        <Footer />
-      </HelmetProvider>
-    </LazyMotion>
+    <LanguageProvider>
+      <LazyMotion features={domMax}>
+        <HelmetProvider>
+          <SEOHead />
+          <Navbar />
+          <main id="main-content">
+            <Hero />
+            <Suspense fallback={<div className="h-24" />}>
+              <About />
+              <Skills />
+              <Experience />
+              <Mobile />
+              <Contact />
+            </Suspense>
+          </main>
+          <Footer />
+        </HelmetProvider>
+      </LazyMotion>
+    </LanguageProvider>
   )
 }
 

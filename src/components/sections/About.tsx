@@ -5,6 +5,7 @@ import { MapPin, Code2, Layers, Users } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { personal } from "@/data/personal";
+import { useTranslation } from "@/hooks/useTranslation";
 import { cn } from "@/lib/utils";
 
 function AnimatedCounter({
@@ -45,34 +46,39 @@ function AnimatedCounter({
   );
 }
 
-const highlights = [
-  {
-    icon: Code2,
-    title: "Cross-Platform Expert",
-    description:
-      "Single codebase, native performance. React Native from Day 1 to App Store.",
-    color: "text-blue-500",
-    bg: "bg-blue-500/10",
-  },
-  {
-    icon: Layers,
-    title: "Architecture-First",
-    description:
-      "Scalable component systems, CI/CD pipelines, and performance-optimized builds.",
-    color: "text-violet-500",
-    bg: "bg-violet-500/10",
-  },
-  {
-    icon: Users,
-    title: "Team Multiplier",
-    description:
-      "Technical mentor, team lead, and code reviewer who elevates everyone around them.",
-    color: "text-emerald-500",
-    bg: "bg-emerald-500/10",
-  },
-];
-
 export function About() {
+  const { t } = useTranslation();
+
+  const highlights = [
+    {
+      icon: Code2,
+      title: t.about.highlights.crossPlatform.title,
+      description: t.about.highlights.crossPlatform.description,
+      color: "text-blue-500",
+      bg: "bg-blue-500/10",
+    },
+    {
+      icon: Layers,
+      title: t.about.highlights.architecture.title,
+      description: t.about.highlights.architecture.description,
+      color: "text-violet-500",
+      bg: "bg-violet-500/10",
+    },
+    {
+      icon: Users,
+      title: t.about.highlights.team.title,
+      description: t.about.highlights.team.description,
+      color: "text-emerald-500",
+      bg: "bg-emerald-500/10",
+    },
+  ];
+
+  const stats = [
+    { value: '10+', label: t.about.stats.years },
+    { value: '5+', label: t.about.stats.industries },
+    { value: '2', label: t.about.stats.platforms },
+  ];
+
   return (
     <section
       id="about"
@@ -81,9 +87,9 @@ export function About() {
     >
       <div className="max-w-6xl mx-auto">
         <SectionHeading
-          label="About Me"
-          title="Engineering mobile experiences at scale"
-          description="I don't just write code — I build systems, mentor teams, and deliver products that live in millions of pockets."
+          label={t.about.label}
+          title={t.about.title}
+          description={t.about.description}
         />
 
         <div className="mt-16 grid md:grid-cols-2 gap-12 items-center">
@@ -94,7 +100,7 @@ export function About() {
               <div className="relative">
                 <img
                   src="/avatar.png"
-                  alt="Sergio Junca"
+                  alt={t.about.avatarAlt}
                   className="size-48 rounded-2xl object-cover shadow-2xl"
                 />
                 <div className="absolute -bottom-3 -right-3 size-10 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg">
@@ -112,7 +118,7 @@ export function About() {
 
               {/* Stats */}
               <div className="grid grid-cols-3 gap-4 w-full max-w-sm">
-                {personal.stats.map((stat) => (
+                {stats.map((stat) => (
                   <div
                     key={stat.label}
                     className="text-center p-3 rounded-xl bg-card border border-border"
@@ -137,28 +143,19 @@ export function About() {
             <div className="space-y-6">
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  I'm a{" "}
+                  {t.about.bio1Pre}
                   <strong className="text-foreground">
-                    Senior Mobile Engineer
-                  </strong>{" "}
-                  with over 10 years of experience building and shipping
-                  production-grade React Native applications across fintech,
-                  gaming, healthcare, and logistics industries.
+                    {t.about.bio1Strong}
+                  </strong>
+                  {t.about.bio1Post}
                 </p>
+                <p>{t.about.bio2}</p>
                 <p>
-                  My expertise spans the full mobile lifecycle, from
-                  architecture decisions and scalable component systems to CI/CD
-                  pipelines, App Store deployments, and performance
-                  optimization. I've led engineering teams, mentored developers,
-                  and delivered features trusted by real users every day.
-                </p>
-                <p>
-                  I hold a{" "}
+                  {t.about.bio3Pre}
                   <strong className="text-foreground">
-                    Bachelor's degree in Computer Science and Engineering
-                  </strong>{" "}
-                  from the Autonomous University of Bucaramanga and have been a
-                  technical speaker and mentor throughout my career.
+                    {t.about.bio3Strong}
+                  </strong>
+                  {t.about.bio3Post}
                 </p>
               </div>
 
