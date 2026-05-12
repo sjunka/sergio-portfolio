@@ -2,31 +2,8 @@ import { m, useReducedMotion } from 'framer-motion'
 import { Smartphone, Globe, Zap, Shield } from 'lucide-react'
 import { SectionHeading } from '@/components/shared/SectionHeading'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
+import { useTranslation } from '@/hooks/useTranslation'
 import { cn } from '@/lib/utils'
-
-const mobileHighlights = [
-  {
-    icon: Globe,
-    title: 'Cross-Platform Native',
-    description: 'Single React Native codebase delivering pixel-perfect experiences on both iOS and Android.',
-    color: 'text-blue-500',
-    bg: 'bg-blue-500/10',
-  },
-  {
-    icon: Zap,
-    title: 'Performance-First',
-    description: 'Optimized renders, lazy loading, native animations, and 60fps UI at scale.',
-    color: 'text-yellow-500',
-    bg: 'bg-yellow-500/10',
-  },
-  {
-    icon: Shield,
-    title: 'Production-Ready',
-    description: 'CI/CD pipelines, App Store & Play Store releases, crash monitoring, and feature flags.',
-    color: 'text-emerald-500',
-    bg: 'bg-emerald-500/10',
-  },
-]
 
 const mobileStack = [
   'React Native', 'TypeScript', 'iOS', 'Android',
@@ -35,13 +12,13 @@ const mobileStack = [
   'React Navigation', 'Reanimated', 'WCAG Accessibility',
 ]
 
-const mobileStats = [
-  { value: '6+', label: 'Years React Native' },
-  { value: '2', label: 'Platforms' },
-  { value: '5+', label: 'Apps Shipped' },
+const mobileStatsValues = [
+  { value: '6+', key: 'years' as const },
+  { value: '2', key: 'platforms' as const },
+  { value: '5+', key: 'apps' as const },
 ]
 
-function PhoneMockup() {
+function PhoneMockup({ mockupLabel }: { mockupLabel: string }) {
   const prefersReduced = useReducedMotion()
 
   return (
@@ -59,7 +36,7 @@ function PhoneMockup() {
         animate={prefersReduced ? {} : { y: [0, -8, 0] }}
         transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
         className="relative z-10 w-[180px] h-[360px] bg-card border-2 border-border rounded-[36px] shadow-2xl flex flex-col overflow-hidden"
-        aria-label="Mobile phone mockup"
+        aria-label={mockupLabel}
       >
         {/* Status bar */}
         <div className="flex justify-between items-center px-5 pt-3 pb-1">
@@ -151,19 +128,45 @@ function PhoneMockup() {
 }
 
 export function Mobile() {
+  const { t } = useTranslation()
+
+  const mobileHighlights = [
+    {
+      icon: Globe,
+      title: t.mobile.highlights.crossPlatform.title,
+      description: t.mobile.highlights.crossPlatform.description,
+      color: 'text-blue-500',
+      bg: 'bg-blue-500/10',
+    },
+    {
+      icon: Zap,
+      title: t.mobile.highlights.performance.title,
+      description: t.mobile.highlights.performance.description,
+      color: 'text-yellow-500',
+      bg: 'bg-yellow-500/10',
+    },
+    {
+      icon: Shield,
+      title: t.mobile.highlights.production.title,
+      description: t.mobile.highlights.production.description,
+      color: 'text-emerald-500',
+      bg: 'bg-emerald-500/10',
+    },
+  ]
+
   return (
     <section id="mobile" aria-labelledby="mobile-heading" className="py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <SectionHeading
-          label="Mobile Engineering"
-          title="React Native Developer"
-          description="Specialized in shipping cross-platform mobile apps with native performance — from architecture to the App Store."
+          label={t.mobile.label}
+          title={t.mobile.title}
+          description={t.mobile.description}
         />
 
         <div className="mt-16 grid md:grid-cols-2 gap-16 items-center">
           {/* Phone mockup */}
           <AnimatedSection direction="left" className="flex justify-center">
-            <PhoneMockup />
+            <PhoneMockup mockupLabel={t.mobile.mockup} />
           </AnimatedSection>
 
           {/* Content */}
@@ -171,13 +174,13 @@ export function Mobile() {
             <div className="space-y-8">
               {/* Stats */}
               <div className="grid grid-cols-3 gap-4">
-                {mobileStats.map(stat => (
+                {mobileStatsValues.map(stat => (
                   <div
-                    key={stat.label}
+                    key={stat.key}
                     className="text-center p-3 rounded-xl bg-card border border-border"
                   >
                     <div className="text-2xl font-extrabold text-primary">{stat.value}</div>
-                    <div className="text-xs text-muted-foreground mt-1 leading-tight">{stat.label}</div>
+                    <div className="text-xs text-muted-foreground mt-1 leading-tight">{t.mobile.stats[stat.key]}</div>
                   </div>
                 ))}
               </div>
@@ -204,7 +207,7 @@ export function Mobile() {
 
               {/* Mobile stack */}
               <div>
-                <h3 className="text-sm font-semibold text-foreground mb-3">Mobile Tech Stack</h3>
+                <h3 className="text-sm font-semibold text-foreground mb-3">{t.mobile.stack}</h3>
                 <div className="flex flex-wrap gap-2">
                   {mobileStack.map(tech => (
                     <span

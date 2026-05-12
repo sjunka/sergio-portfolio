@@ -2,21 +2,24 @@ import { useState, useEffect } from 'react'
 import { m, AnimatePresence } from 'framer-motion'
 import { Menu, X, Download } from 'lucide-react'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
+import { LanguageToggle } from '@/components/shared/LanguageToggle'
 import { personal } from '@/data/personal'
+import { useTranslation } from '@/hooks/useTranslation'
 import { cn } from '@/lib/utils'
 
-const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Mobile', href: '#mobile' },
-  { label: 'Contact', href: '#contact' },
-]
-
 export function Navbar() {
+  const { t } = useTranslation()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+
+  const navLinks = [
+    { label: t.nav.about, href: '#about' },
+    { label: t.nav.skills, href: '#skills' },
+    { label: t.nav.experience, href: '#experience' },
+    { label: t.nav.mobile, href: '#mobile' },
+    { label: t.nav.contact, href: '#contact' },
+  ]
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -50,7 +53,7 @@ export function Navbar() {
 
   return (
     <>
-      <a href="#main-content" className="skip-link">Skip to main content</a>
+      <a href="#main-content" className="skip-link">{t.nav.skipToContent}</a>
 
       <header
         role="banner"
@@ -62,13 +65,13 @@ export function Navbar() {
         )}
       >
         <nav
-          aria-label="Main navigation"
+          aria-label={t.nav.mainNav}
           className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16"
         >
           {/* Logo */}
           <a
             href="#hero"
-            aria-label="Sergio Junca — back to top"
+            aria-label={t.nav.backToTop}
             className="font-bold text-xl tracking-tight text-foreground hover:text-primary transition-colors"
           >
             <span className="text-primary">SJ</span>
@@ -106,7 +109,7 @@ export function Navbar() {
             <a
               href={personal.resumePdf}
               download
-              aria-label="Download Resume PDF"
+              aria-label={t.nav.downloadResumePdf}
               className={cn(
                 'hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium',
                 'border border-primary text-primary hover:bg-primary hover:text-primary-foreground',
@@ -114,12 +117,13 @@ export function Navbar() {
               )}
             >
               <Download size={14} aria-hidden="true" />
-              Resume
+              {t.nav.resume}
             </a>
+            <LanguageToggle />
             <ThemeToggle />
             <button
               onClick={() => setMenuOpen(o => !o)}
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               className="md:hidden size-9 flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
@@ -137,7 +141,7 @@ export function Navbar() {
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
-            aria-label="Mobile navigation"
+            aria-label={t.nav.mobileNav}
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
@@ -176,7 +180,7 @@ export function Navbar() {
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-primary text-primary-foreground font-medium"
                 >
                   <Download size={16} aria-hidden="true" />
-                  Download Resume
+                  {t.nav.downloadResume}
                 </a>
               </m.div>
             </nav>

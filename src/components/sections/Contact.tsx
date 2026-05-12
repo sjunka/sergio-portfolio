@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -8,53 +8,68 @@ import { LinkedInIcon } from '@/components/shared/BrandIcons'
 import { SectionHeading } from '@/components/shared/SectionHeading'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
 import { personal } from '@/data/personal'
+import { useTranslation } from '@/hooks/useTranslation'
 import { cn } from '@/lib/utils'
 
-const schema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Please enter a valid email address'),
-  message: z.string().min(20, 'Message must be at least 20 characters'),
-})
-
-type FormData = z.infer<typeof schema>
+type FormData = {
+  name: string
+  email: string
+  message: string
+}
 
 type SubmitState = 'idle' | 'success' | 'error'
 
-const contactInfo = [
-  {
-    Icon: Mail,
-    label: 'Email',
-    value: personal.email,
-    href: `mailto:${personal.email}`,
-  },
-  {
-    Icon: LinkedInIcon,
-    label: 'LinkedIn',
-    value: 'linkedin.com/in/sjunka',
-    href: personal.linkedin,
-  },
-  {
-    Icon: MapPin,
-    label: 'Location',
-    value: personal.location,
-    href: null,
-  },
-]
-
 export function Contact() {
+  const { t, lang } = useTranslation()
   const prefersReduced = useReducedMotion()
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        name: z.string().min(2, t.contact.form.nameError),
+        email: z.string().email(t.contact.form.emailError),
+        message: z.string().min(20, t.contact.form.messageError),
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [lang]
+  )
 
   const {
     register,
     handleSubmit,
     reset,
+    clearErrors,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
+  useEffect(() => {
+    clearErrors()
+  }, [lang, clearErrors])
+
+  const contactInfo = [
+    {
+      Icon: Mail,
+      label: t.contact.emailLabel,
+      value: personal.email,
+      href: `mailto:${personal.email}`,
+    },
+    {
+      Icon: LinkedInIcon,
+      label: t.contact.linkedinLabel,
+      value: 'linkedin.com/in/sjunka',
+      href: personal.linkedin,
+    },
+    {
+      Icon: MapPin,
+      label: t.contact.locationLabel,
+      value: personal.location,
+      href: null,
+    },
+  ]
+
   const onSubmit = async (data: FormData) => {
     try {
-      // Opens default mail client with pre-filled message
       const subject = encodeURIComponent(`Portfolio Contact from ${data.name}`)
       const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`)
       window.location.href = `mailto:${personal.email}?subject=${subject}&body=${body}`
@@ -74,19 +89,18 @@ export function Contact() {
     >
       <div className="max-w-6xl mx-auto">
         <SectionHeading
-          label="Contact"
-          title="Let's build something together"
-          description="Open to senior mobile engineering roles, consulting engagements, and technical collaborations."
+          label={t.contact.label}
+          title={t.contact.title}
+          description={t.contact.description}
         />
 
         <div className="mt-16 grid md:grid-cols-2 gap-12">
           {/* Left — contact info */}
           <AnimatedSection direction="left" className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Get in touch</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{t.contact.getInTouch}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Whether you're hiring for a senior mobile role, need consulting on a React Native
-                architecture, or just want to connect. I'd love to hear from you.
+                {t.contact.getInTouchDesc}
               </p>
             </div>
 
@@ -123,7 +137,7 @@ export function Contact() {
                 <span className="animate-ping absolute h-full w-full rounded-full bg-emerald-500 opacity-75" />
                 <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
               </span>
-              Available for new opportunities
+              {t.contact.available}
             </div>
           </AnimatedSection>
 
@@ -132,13 +146,13 @@ export function Contact() {
             <form
               onSubmit={handleSubmit(onSubmit)}
               noValidate
-              aria-label="Contact form"
+              aria-label={t.contact.contactForm}
               className="space-y-5"
             >
               {/* Name */}
               <div>
                 <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-1.5">
-                  Name <span aria-hidden="true">*</span>
+                  {t.contact.form.name} <span aria-hidden="true">*</span>
                 </label>
                 <input
                   id="contact-name"
@@ -153,7 +167,7 @@ export function Contact() {
                     'transition-colors duration-200',
                     errors.name ? 'border-destructive' : 'border-border hover:border-primary/40'
                   )}
-                  placeholder="Your full name"
+                  placeholder={t.contact.form.namePlaceholder}
                 />
                 {errors.name && (
                   <p id="name-error" role="alert" className="mt-1 text-xs text-red-500 flex items-center gap-1">
@@ -165,7 +179,7 @@ export function Contact() {
               {/* Email */}
               <div>
                 <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-1.5">
-                  Email <span aria-hidden="true">*</span>
+                  {t.contact.form.email} <span aria-hidden="true">*</span>
                 </label>
                 <input
                   id="contact-email"
@@ -180,7 +194,7 @@ export function Contact() {
                     'transition-colors duration-200',
                     errors.email ? 'border-destructive' : 'border-border hover:border-primary/40'
                   )}
-                  placeholder="you@company.com"
+                  placeholder={t.contact.form.emailPlaceholder}
                 />
                 {errors.email && (
                   <p id="email-error" role="alert" className="mt-1 text-xs text-red-500 flex items-center gap-1">
@@ -192,7 +206,7 @@ export function Contact() {
               {/* Message */}
               <div>
                 <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-1.5">
-                  Message <span aria-hidden="true">*</span>
+                  {t.contact.form.message} <span aria-hidden="true">*</span>
                 </label>
                 <textarea
                   id="contact-message"
@@ -206,7 +220,7 @@ export function Contact() {
                     'transition-colors duration-200',
                     errors.message ? 'border-destructive' : 'border-border hover:border-primary/40'
                   )}
-                  placeholder="Tell me about the role, project, or collaboration you have in mind..."
+                  placeholder={t.contact.form.messagePlaceholder}
                 />
                 {errors.message && (
                   <p id="message-error" role="alert" className="mt-1 text-xs text-red-500 flex items-center gap-1">
@@ -230,7 +244,7 @@ export function Contact() {
                 )}
               >
                 <Send size={16} aria-hidden="true" />
-                {isSubmitting ? 'Opening mail client...' : 'Send Message'}
+                {isSubmitting ? t.contact.form.sending : t.contact.form.send}
               </m.button>
 
               {/* Status messages */}
@@ -245,7 +259,7 @@ export function Contact() {
                     className="flex items-center gap-2 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-sm"
                   >
                     <CheckCircle2 size={16} aria-hidden="true" />
-                    Message ready to send in your mail client.
+                    {t.contact.form.successMsg}
                   </m.div>
                 )}
                 {submitState === 'error' && (
@@ -258,7 +272,7 @@ export function Contact() {
                     className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-sm"
                   >
                     <AlertCircle size={16} aria-hidden="true" />
-                    Something went wrong. Please email directly at {personal.email}
+                    {t.contact.form.errorMsg}{personal.email}
                   </m.div>
                 )}
               </AnimatePresence>
