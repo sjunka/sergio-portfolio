@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.svg", "avatar.png", "sergio-junca-resume.pdf"],
       manifest: {
-        name: "Portfolio",
-        short_name: "Portfolio",
+        name: "Sergio Portfolio",
+        short_name: "Sergio Portfolio",
         description: "Software engineer portfolio — Sergio Junca",
         theme_color: "#0A0F1E",
         background_color: "#0A0F1E",
