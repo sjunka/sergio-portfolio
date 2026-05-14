@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.svg", "avatar.png", "sergio-junca-resume.pdf"],
       manifest: {
-        name: "Sergio Junca — Portfolio",
-        short_name: "Sergio",
+        name: "Portfolio",
+        short_name: "Portfolio",
         description: "Software engineer portfolio — Sergio Junca",
         theme_color: "#0A0F1E",
         background_color: "#0A0F1E",
@@ -19,7 +19,8 @@ export default defineConfig({
         start_url: "/",
         icons: [
           { src: "pwa-192.png", sizes: "192x192", type: "image/png" },
-          { src: "pwa-512.png", sizes: "512x512", type: "image/png", purpose: "any maskable" },
+          { src: "pwa-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+          { src: "pwa-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
         ],
       },
       workbox: {
