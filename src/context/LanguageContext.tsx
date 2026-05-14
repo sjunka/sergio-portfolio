@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback, useTransition, useDebugValue, type ReactNode } from 'react'
+import { createContext, use, useState, useEffect, useCallback, useTransition, useDebugValue, type ReactNode } from 'react'
 import type { Lang } from '@/i18n'
 
 interface LanguageContextValue {
@@ -45,7 +45,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 }
 
 export function useLanguage() {
-  const ctx = useContext(LanguageContext)
+  const ctx = use(LanguageContext)
   if (!ctx) throw new Error('useLanguage must be used within LanguageProvider')
   return ctx
 }
