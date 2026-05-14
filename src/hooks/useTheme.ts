@@ -1,6 +1,12 @@
-import { useState, useEffect, useCallback, useDebugValue } from 'react'
+import { useState, useLayoutEffect, useCallback, useDebugValue } from 'react'
 
 type Theme = 'dark' | 'light'
+
+function applyTheme(theme: Theme) {
+  document.documentElement.classList.remove('dark', 'light')
+  document.documentElement.classList.add(theme)
+  localStorage.setItem('theme', theme)
+}
 
 export function useTheme() {
   const [theme, setThemeState] = useState<Theme>(() => {
@@ -11,14 +17,17 @@ export function useTheme() {
 
   useDebugValue(theme, t => `Theme: ${t}`)
 
-  useEffect(() => {
-    const root = document.documentElement
-    root.classList.remove('dark', 'light')
-    root.classList.add(theme)
-    localStorage.setItem('theme', theme)
-  }, [theme])
+  useLayoutEffect(() => {
+    applyTheme(theme)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const toggleTheme = useCallback(() => setThemeState(t => (t === 'dark' ? 'light' : 'dark')), [])
+  const toggleTheme = useCallback(() => {
+    setThemeState(t => {
+      const next = t === 'dark' ? 'light' : 'dark'
+      applyTheme(next)
+      return next
+    })
+  }, [])
 
   return { theme, toggleTheme }
 }
