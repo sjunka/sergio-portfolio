@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useReducer, useId, useOptimistic, useTransition, useMemo, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -17,12 +17,30 @@ type FormData = {
   message: string
 }
 
-type SubmitState = 'idle' | 'success' | 'error'
+type SubmitState = 'idle' | 'submitting' | 'success' | 'error'
+type Action = { type: 'SUCCESS' } | { type: 'ERROR' } | { type: 'RESET' }
+
+function submitReducer(_state: SubmitState, action: Action): SubmitState {
+  switch (action.type) {
+    case 'SUCCESS': return 'success'
+    case 'ERROR': return 'error'
+    case 'RESET': return 'idle'
+  }
+}
 
 export function Contact() {
   const { t, lang } = useTranslation()
   const prefersReduced = useReducedMotion()
-  const [submitState, setSubmitState] = useState<SubmitState>('idle')
+  const [submitState, dispatch] = useReducer(submitReducer, 'idle')
+  const [isPending, startTransition] = useTransition()
+  const [optimisticState, setOptimistic] = useOptimistic(
+    submitState,
+    (_current, next: SubmitState) => next
+  )
+
+  const nameId = useId()
+  const emailId = useId()
+  const messageId = useId()
 
   const schema = useMemo(
     () =>
@@ -40,7 +58,7 @@ export function Contact() {
     handleSubmit,
     reset,
     clearErrors,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
   useEffect(() => {
@@ -68,18 +86,23 @@ export function Contact() {
     },
   ]
 
-  const onSubmit = async (data: FormData) => {
-    try {
-      const subject = encodeURIComponent(`Portfolio Contact from ${data.name}`)
-      const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`)
-      window.location.href = `mailto:${personal.email}?subject=${subject}&body=${body}`
-      setSubmitState('success')
-      reset()
-    } catch {
-      setSubmitState('error')
-    }
-    setTimeout(() => setSubmitState('idle'), 5000)
+  const onSubmit = (data: FormData) => {
+    startTransition(async () => {
+      setOptimistic('submitting')
+      try {
+        const subject = encodeURIComponent(`Portfolio Contact from ${data.name}`)
+        const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`)
+        window.location.href = `mailto:${personal.email}?subject=${subject}&body=${body}`
+        dispatch({ type: 'SUCCESS' })
+        reset()
+      } catch {
+        dispatch({ type: 'ERROR' })
+      }
+      setTimeout(() => dispatch({ type: 'RESET' }), 5000)
+    })
   }
+
+  const isBusy = optimisticState === 'submitting' || isPending
 
   return (
     <section
@@ -151,15 +174,15 @@ export function Contact() {
             >
               {/* Name */}
               <div>
-                <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-1.5">
+                <label htmlFor={nameId} className="block text-sm font-medium text-foreground mb-1.5">
                   {t.contact.form.name} <span aria-hidden="true">*</span>
                 </label>
                 <input
-                  id="contact-name"
+                  id={nameId}
                   type="text"
                   autoComplete="name"
                   aria-invalid={!!errors.name}
-                  aria-describedby={errors.name ? 'name-error' : undefined}
+                  aria-describedby={errors.name ? `${nameId}-error` : undefined}
                   {...register('name')}
                   className={cn(
                     'w-full px-4 py-2.5 rounded-lg text-sm bg-card border text-foreground',
@@ -170,7 +193,7 @@ export function Contact() {
                   placeholder={t.contact.form.namePlaceholder}
                 />
                 {errors.name && (
-                  <p id="name-error" role="alert" className="mt-1 text-xs text-red-500 flex items-center gap-1">
+                  <p id={`${nameId}-error`} role="alert" className="mt-1 text-xs text-red-500 flex items-center gap-1">
                     <AlertCircle size={12} aria-hidden="true" /> {errors.name.message}
                   </p>
                 )}
@@ -178,15 +201,15 @@ export function Contact() {
 
               {/* Email */}
               <div>
-                <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-1.5">
+                <label htmlFor={emailId} className="block text-sm font-medium text-foreground mb-1.5">
                   {t.contact.form.email} <span aria-hidden="true">*</span>
                 </label>
                 <input
-                  id="contact-email"
+                  id={emailId}
                   type="email"
                   autoComplete="email"
                   aria-invalid={!!errors.email}
-                  aria-describedby={errors.email ? 'email-error' : undefined}
+                  aria-describedby={errors.email ? `${emailId}-error` : undefined}
                   {...register('email')}
                   className={cn(
                     'w-full px-4 py-2.5 rounded-lg text-sm bg-card border text-foreground',
@@ -197,7 +220,7 @@ export function Contact() {
                   placeholder={t.contact.form.emailPlaceholder}
                 />
                 {errors.email && (
-                  <p id="email-error" role="alert" className="mt-1 text-xs text-red-500 flex items-center gap-1">
+                  <p id={`${emailId}-error`} role="alert" className="mt-1 text-xs text-red-500 flex items-center gap-1">
                     <AlertCircle size={12} aria-hidden="true" /> {errors.email.message}
                   </p>
                 )}
@@ -205,14 +228,14 @@ export function Contact() {
 
               {/* Message */}
               <div>
-                <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-1.5">
+                <label htmlFor={messageId} className="block text-sm font-medium text-foreground mb-1.5">
                   {t.contact.form.message} <span aria-hidden="true">*</span>
                 </label>
                 <textarea
-                  id="contact-message"
+                  id={messageId}
                   rows={5}
                   aria-invalid={!!errors.message}
-                  aria-describedby={errors.message ? 'message-error' : undefined}
+                  aria-describedby={errors.message ? `${messageId}-error` : undefined}
                   {...register('message')}
                   className={cn(
                     'w-full px-4 py-2.5 rounded-lg text-sm bg-card border text-foreground resize-none',
@@ -223,7 +246,7 @@ export function Contact() {
                   placeholder={t.contact.form.messagePlaceholder}
                 />
                 {errors.message && (
-                  <p id="message-error" role="alert" className="mt-1 text-xs text-red-500 flex items-center gap-1">
+                  <p id={`${messageId}-error`} role="alert" className="mt-1 text-xs text-red-500 flex items-center gap-1">
                     <AlertCircle size={12} aria-hidden="true" /> {errors.message.message}
                   </p>
                 )}
@@ -232,7 +255,7 @@ export function Contact() {
               {/* Submit */}
               <m.button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isBusy}
                 whileHover={prefersReduced ? undefined : { scale: 1.02 }}
                 whileTap={prefersReduced ? undefined : { scale: 0.98 }}
                 className={cn(
@@ -244,12 +267,12 @@ export function Contact() {
                 )}
               >
                 <Send size={16} aria-hidden="true" />
-                {isSubmitting ? t.contact.form.sending : t.contact.form.send}
+                {isBusy ? t.contact.form.sending : t.contact.form.send}
               </m.button>
 
               {/* Status messages */}
               <AnimatePresence>
-                {submitState === 'success' && (
+                {optimisticState === 'success' && (
                   <m.div
                     role="status"
                     aria-live="polite"
@@ -262,7 +285,7 @@ export function Contact() {
                     {t.contact.form.successMsg}
                   </m.div>
                 )}
-                {submitState === 'error' && (
+                {optimisticState === 'error' && (
                   <m.div
                     role="alert"
                     aria-live="assertive"

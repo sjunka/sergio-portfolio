@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { LazyMotion, domMax } from 'framer-motion'
 import { HelmetProvider } from 'react-helmet-async'
 import { LanguageProvider } from '@/context/LanguageContext'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { SEOHead } from '@/components/shared/SEOHead'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
@@ -22,13 +23,15 @@ function App() {
           <Navbar />
           <main id="main-content">
             <Hero />
-            <Suspense fallback={<div className="h-24" />}>
-              <About />
-              <Skills />
-              <Experience />
-              <Mobile />
-              <Contact />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<div className="h-24" />}>
+                <About />
+                <Skills />
+                <Experience />
+                <Mobile />
+                <Contact />
+              </Suspense>
+            </ErrorBoundary>
           </main>
           <Footer />
         </HelmetProvider>

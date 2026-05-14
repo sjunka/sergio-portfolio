@@ -1,9 +1,10 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, useTransition, useDebugValue, type ReactNode } from 'react'
 import type { Lang } from '@/i18n'
 
 interface LanguageContextValue {
   lang: Lang
   toggleLang: () => void
+  isLangPending: boolean
 }
 
 const LanguageContext = createContext<LanguageContextValue | null>(null)
@@ -21,15 +22,23 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return navigator.language.startsWith('es') ? 'es' : 'en'
   })
 
+  const [isLangPending, startTransition] = useTransition()
+
+  useDebugValue(lang, l => `Lang: ${l}`)
+
   useEffect(() => {
     localStorage.setItem('language', lang)
     document.documentElement.lang = lang
   }, [lang])
 
-  const toggleLang = () => setLangState(l => (l === 'en' ? 'es' : 'en'))
+  const toggleLang = useCallback(() => {
+    startTransition(() => {
+      setLangState(l => (l === 'en' ? 'es' : 'en'))
+    })
+  }, [])
 
   return (
-    <LanguageContext.Provider value={{ lang, toggleLang }}>
+    <LanguageContext.Provider value={{ lang, toggleLang, isLangPending }}>
       {children}
     </LanguageContext.Provider>
   )

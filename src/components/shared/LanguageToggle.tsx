@@ -7,17 +7,19 @@ interface LanguageToggleProps {
 }
 
 export function LanguageToggle({ className }: LanguageToggleProps) {
-  const { lang, toggleLang } = useLanguage()
+  const { lang, toggleLang, isLangPending } = useLanguage()
   const prefersReduced = useReducedMotion()
 
   return (
     <button
       onClick={toggleLang}
+      disabled={isLangPending}
       aria-label={lang === 'en' ? 'Switch to Spanish' : 'Cambiar a inglés'}
       className={cn(
         'relative h-9 w-9 rounded-md flex items-center justify-center overflow-hidden',
         'text-muted-foreground hover:text-foreground hover:bg-muted',
         'transition-colors duration-200 text-xs font-bold tracking-wide',
+        isLangPending && 'opacity-50 cursor-wait',
         className
       )}
     >

@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { AnimatedSection } from './AnimatedSection'
 import { cn } from '@/lib/utils'
 
@@ -9,7 +10,7 @@ interface SectionHeadingProps {
   align?: 'left' | 'center'
 }
 
-export function SectionHeading({
+export const SectionHeading = memo(function SectionHeading({
   label,
   title,
   description,
@@ -30,4 +31,5 @@ export function SectionHeading({
       <div className={cn('mt-4 h-1 w-12 rounded-full bg-primary', align === 'center' && 'mx-auto')} />
     </AnimatedSection>
   )
-}
+})
+SectionHeading.displayName = 'SectionHeading'
