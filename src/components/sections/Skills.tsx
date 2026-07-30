@@ -26,6 +26,7 @@ export function Skills() {
     >
       <div className="max-w-6xl mx-auto">
         <SectionHeading
+          id="skills-heading"
           label={t.skills.label}
           title={t.skills.title}
           description={t.skills.description}

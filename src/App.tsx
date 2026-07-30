@@ -22,11 +22,29 @@ function ScrollManager() {
   const { pathname, hash } = useLocation()
 
   useEffect(() => {
-    if (hash) {
-      document.getElementById(hash.slice(1))?.scrollIntoView()
+    if (!hash) {
+      window.scrollTo({ top: 0, behavior: 'instant' })
       return
     }
-    window.scrollTo({ top: 0, behavior: 'instant' })
+    // The about page's sections are lazy, so the anchor usually doesn't exist on
+    // the first tick — a single getElementById silently scrolls nowhere. Waiting
+    // on the DOM beats a timeout: a slow chunk on a slow connection would outlast
+    // any deadline worth picking.
+    const id = hash.slice(1)
+    const target = document.getElementById(id)
+    if (target) {
+      target.scrollIntoView()
+      return
+    }
+
+    const observer = new MutationObserver(() => {
+      const el = document.getElementById(id)
+      if (!el) return
+      observer.disconnect()
+      el.scrollIntoView()
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
+    return () => observer.disconnect()
   }, [pathname, hash])
 
   useEffect(() => {

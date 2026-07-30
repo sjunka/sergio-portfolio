@@ -46,7 +46,7 @@ export function Contact() {
     () =>
       z.object({
         name: z.string().min(2, t.contact.form.nameError),
-        email: z.string().email(t.contact.form.emailError),
+        email: z.email(t.contact.form.emailError),
         message: z.string().min(20, t.contact.form.messageError),
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -112,6 +112,7 @@ export function Contact() {
     >
       <div className="max-w-6xl mx-auto">
         <SectionHeading
+          id="contact-heading"
           label={t.contact.label}
           title={t.contact.title}
           description={t.contact.description}

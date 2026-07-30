@@ -17,16 +17,13 @@ export function useTheme() {
 
   useDebugValue(theme, t => `Theme: ${t}`)
 
+  // Applying on every change keeps the updater pure — no side effects inside setState.
   useLayoutEffect(() => {
     applyTheme(theme)
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [theme])
 
   const toggleTheme = useCallback(() => {
-    setThemeState(t => {
-      const next = t === 'dark' ? 'light' : 'dark'
-      applyTheme(next)
-      return next
-    })
+    setThemeState(t => (t === 'dark' ? 'light' : 'dark'))
   }, [])
 
   return { theme, toggleTheme }

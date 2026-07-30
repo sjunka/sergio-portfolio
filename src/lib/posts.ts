@@ -84,10 +84,6 @@ export function getPosts(lang: Lang): Post[] {
   return [...bySlug.values()].sort((a, b) => b.date.localeCompare(a.date))
 }
 
-export function getPost(slug: string, lang: Lang): Post | undefined {
-  return getPosts(lang).find(p => p.slug === slug)
-}
-
 export function getTags(lang: Lang): string[] {
   return [...new Set(getPosts(lang).flatMap(p => p.tags))].sort()
 }

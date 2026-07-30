@@ -4,6 +4,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowLeft, ArrowRight, Info } from 'lucide-react'
 import { marked } from 'marked'
+import DOMPurify from 'dompurify'
 import { SEOHead } from '@/components/shared/SEOHead'
 import { LinkedInIcon, GitHubIcon } from '@/components/shared/BrandIcons'
 import { personal } from '@/data/personal'
@@ -118,8 +119,8 @@ export function BlogPost() {
           )}
         </header>
 
-        {/* Markdown from this repo's own content directory. */}
-        <div className="prose mt-14" dangerouslySetInnerHTML={{ __html: html }} />
+        {/* Markdown from this repo's own content directory, sanitized at the sink. */}
+        <div className="prose mt-14" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} />
 
         <footer className="mt-20 border-t border-border pt-10">
           <div className="flex flex-wrap items-center gap-4">
