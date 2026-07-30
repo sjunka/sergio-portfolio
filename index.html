@@ -20,7 +20,14 @@
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Sergio Junca" />
 
-    <link rel="canonical" href="https://sergiojunca.online/" />
+    <!--
+      No static canonical here on purpose. SEOHead emits a per-route one, and on
+      React 19 react-helmet-async delegates to React's head hoisting, which does
+      not replace tags that were already in this file — a static canonical would
+      leave every URL serving two. The og/twitter tags below stay because social
+      crawlers don't run JS and would otherwise get no preview at all; they are
+      the home page's values until the site is prerendered.
+    -->
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <link rel="apple-touch-icon" href="/pwa-192.png" />
 
