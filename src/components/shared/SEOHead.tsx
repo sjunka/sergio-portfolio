@@ -1,6 +1,10 @@
 import { Helmet } from 'react-helmet-async'
 import { personal } from '@/data/personal'
 
+const defaultTitle = 'Sergio Junca | Senior React Native Engineer | iOS & Android'
+const defaultDescription =
+  'Senior Mobile Engineer with 10+ years building production React Native apps for fintech, gaming, healthcare, and logistics. Available for senior roles globally.'
+
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -34,45 +38,58 @@ const personSchema = {
   },
 }
 
-export function SEOHead() {
+export interface SEOHeadProps {
+  title?: string
+  description?: string
+  /** Path without a leading slash, e.g. `blog/flatlist-jank`. */
+  path?: string
+  /** Set on blog posts so crawlers get an article rather than a website. */
+  article?: { published: string; tags: string[] }
+}
+
+export function SEOHead({ title, description, path, article }: SEOHeadProps = {}) {
+  const pageTitle = title ?? defaultTitle
+  const pageDescription = description ?? defaultDescription
+  const url = `${personal.siteUrl}${path ?? ''}`
+  const image = `${personal.siteUrl}og-image.jpg`
+
+  const schema = article
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: pageTitle,
+        description: pageDescription,
+        datePublished: article.published,
+        keywords: article.tags.join(', '),
+        url,
+        author: { '@type': 'Person', name: personal.name, url: personal.siteUrl },
+      }
+    : personSchema
+
   return (
     <Helmet>
-      <html lang="en" />
-      <title>Sergio Junca | Senior React Native Engineer | iOS & Android</title>
-      <meta
-        name="description"
-        content="Senior Mobile Engineer with 10+ years building production React Native apps for fintech, gaming, healthcare, and logistics. Available for senior roles globally."
-      />
-      <meta
-        name="keywords"
-        content="React Native, Senior Mobile Engineer, TypeScript, JavaScript, iOS, Android, Cross-Platform, Fintech, Gaming, iGaming, Healthcare, Logistics, Redux, MobX, GraphQL, CI/CD, CircleCI, Colombia, Remote"
-      />
+      <title>{pageTitle}</title>
+      <meta name="description" content={pageDescription} />
       <meta name="author" content="Sergio Junca" />
       <meta name="robots" content="index, follow" />
       <meta name="theme-color" content="#0A0F1E" />
-      <link rel="canonical" href={personal.siteUrl} />
+      <link rel="canonical" href={url} />
 
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content={personal.siteUrl} />
-      <meta property="og:title" content="Sergio Junca | Senior React Native Engineer" />
-      <meta
-        property="og:description"
-        content="10+ years shipping production mobile apps across iOS & Android. React Native specialist in fintech, gaming, healthcare, and logistics."
-      />
-      <meta property="og:image" content={`${personal.siteUrl}og-image.png`} />
+      <meta property="og:type" content={article ? 'article' : 'website'} />
+      <meta property="og:url" content={url} />
+      <meta property="og:title" content={pageTitle} />
+      <meta property="og:description" content={pageDescription} />
+      <meta property="og:image" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:locale" content="en_US" />
+      {article ? <meta property="article:published_time" content={article.published} /> : null}
 
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Sergio Junca | Senior React Native Engineer" />
-      <meta
-        name="twitter:description"
-        content="10+ years shipping production mobile apps across iOS & Android."
-      />
-      <meta name="twitter:image" content={`${personal.siteUrl}og-image.png`} />
+      <meta name="twitter:title" content={pageTitle} />
+      <meta name="twitter:description" content={pageDescription} />
+      <meta name="twitter:image" content={image} />
 
-      <script type="application/ld+json">{JSON.stringify(personSchema)}</script>
+      <script type="application/ld+json">{JSON.stringify(schema)}</script>
     </Helmet>
   )
 }

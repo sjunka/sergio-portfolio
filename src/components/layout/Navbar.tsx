@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { m, AnimatePresence } from 'framer-motion'
 import { Menu, X, Download } from 'lucide-react'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
@@ -7,31 +8,52 @@ import { personal } from '@/data/personal'
 import { useTranslation } from '@/hooks/useTranslation'
 import { cn } from '@/lib/utils'
 
+const aboutSections = ['about', 'skills', 'experience', 'mobile', 'contact']
+
 export function Navbar() {
   const { t } = useTranslation()
+  const { pathname } = useLocation()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
 
-  const navLinks = [
-    { label: t.nav.about, href: '#about' },
-    { label: t.nav.skills, href: '#skills' },
-    { label: t.nav.experience, href: '#experience' },
-    { label: t.nav.mobile, href: '#mobile' },
-    { label: t.nav.contact, href: '#contact' },
-  ]
+  // On the about page the nav addresses sections; everywhere else, routes.
+  const onAbout = pathname === '/about'
+
+  const navLinks = onAbout
+    ? [
+        { label: t.nav.about, target: '#about' },
+        { label: t.nav.skills, target: '#skills' },
+        { label: t.nav.experience, target: '#experience' },
+        { label: t.nav.mobile, target: '#mobile' },
+        { label: t.nav.contact, target: '#contact' },
+      ]
+    : [
+        { label: t.nav.home, target: '/' },
+        { label: t.nav.blog, target: '/blog' },
+        { label: t.nav.about, target: '/about' },
+      ]
+
+  const isActive = (target: string) =>
+    onAbout
+      ? activeSection === target.slice(1)
+      : target === '/'
+        ? pathname === '/'
+        : pathname.startsWith(target)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
+    handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   useEffect(() => {
-    const sections = ['about', 'skills', 'experience', 'mobile', 'contact']
+    // Off the about page nothing reads activeSection, so there is nothing to observe.
+    if (!onAbout) return
     const observers: IntersectionObserver[] = []
 
-    sections.forEach(id => {
+    aboutSections.forEach(id => {
       const el = document.getElementById(id)
       if (!el) return
       const obs = new IntersectionObserver(
@@ -43,13 +65,35 @@ export function Navbar() {
     })
 
     return () => observers.forEach(o => o.disconnect())
-  }, [])
+  }, [onAbout])
 
   useEffect(() => {
     if (menuOpen) document.body.style.overflow = 'hidden'
     else document.body.style.overflow = ''
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
+
+  /** Hash targets stay plain anchors so CSS smooth scrolling handles them. */
+  const NavItem = ({
+    target,
+    children,
+    className,
+    onClick,
+  }: {
+    target: string
+    children: React.ReactNode
+    className?: string
+    onClick?: () => void
+  }) =>
+    target.startsWith('#') ? (
+      <a href={target} className={className} onClick={onClick} aria-current={isActive(target) ? 'true' : undefined}>
+        {children}
+      </a>
+    ) : (
+      <Link to={target} className={className} onClick={onClick} aria-current={isActive(target) ? 'page' : undefined}>
+        {children}
+      </Link>
+    )
 
   return (
     <>
@@ -69,37 +113,37 @@ export function Navbar() {
           className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16"
         >
           {/* Logo */}
-          <a
-            href="#hero"
+          <Link
+            to="/"
+            onClick={() => setMenuOpen(false)}
             aria-label={t.nav.backToTop}
             className="font-bold text-xl tracking-tight text-foreground hover:text-primary transition-colors"
           >
             <span className="text-primary">SJ</span>
             <span className="hidden sm:inline text-foreground/60 font-normal ml-1">· Sergio Junca</span>
-          </a>
+          </Link>
 
           {/* Desktop links */}
           <ul className="hidden md:flex items-center gap-1" role="list">
             {navLinks.map(link => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  aria-current={activeSection === link.href.slice(1) ? 'page' : undefined}
+              <li key={link.target}>
+                <NavItem
+                  target={link.target}
                   className={cn(
-                    'px-3 py-2 rounded-md text-sm font-medium transition-colors relative',
-                    activeSection === link.href.slice(1)
+                    'px-3 py-2 rounded-md text-sm font-medium transition-colors relative block',
+                    isActive(link.target)
                       ? 'text-primary'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                   )}
                 >
                   {link.label}
-                  {activeSection === link.href.slice(1) && (
+                  {isActive(link.target) && (
                     <m.span
                       layoutId="nav-indicator"
                       className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-primary"
                     />
                   )}
-                </a>
+                </NavItem>
               </li>
             ))}
           </ul>
@@ -152,18 +196,18 @@ export function Navbar() {
               <ul className="space-y-2" role="list">
                 {navLinks.map((link, i) => (
                   <m.li
-                    key={link.href}
+                    key={link.target}
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.07 }}
                   >
-                    <a
-                      href={link.href}
+                    <NavItem
+                      target={link.target}
                       onClick={() => setMenuOpen(false)}
                       className="block py-3 text-2xl font-semibold text-foreground hover:text-primary transition-colors border-b border-border"
                     >
                       {link.label}
-                    </a>
+                    </NavItem>
                   </m.li>
                 ))}
               </ul>
