@@ -28,6 +28,7 @@ export class ErrorBoundary extends Component<Props, State> {
             A section failed to load. Try refreshing the page.
           </p>
           <button
+            type="button"
             onClick={() => this.setState({ hasError: false })}
             className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"
           >

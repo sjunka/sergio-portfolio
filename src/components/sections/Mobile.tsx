@@ -158,6 +158,7 @@ export function Mobile() {
     <section id="mobile" aria-labelledby="mobile-heading" className="py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <SectionHeading
+          id="mobile-heading"
           label={t.mobile.label}
           title={t.mobile.title}
           description={t.mobile.description}

@@ -1,13 +1,21 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script>
+      // Resolve language and theme before the first paint. A hardcoded class on
+      // <html> would flash the wrong theme at everyone whose choice differs.
       (function () {
+        var el = document.documentElement;
         var s = localStorage.getItem('language');
-        var lang = s === 'en' || s === 'es' ? s : navigator.language.startsWith('es') ? 'es' : 'en';
-        document.documentElement.lang = lang;
+        el.lang = s === 'en' || s === 'es' ? s : navigator.language.startsWith('es') ? 'es' : 'en';
+
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        el.classList.add(t);
       })();
     </script>
     <meta name="theme-color" content="#0A0F1E" />

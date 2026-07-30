@@ -3,6 +3,13 @@ import { m, useReducedMotion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { cn } from '@/lib/utils'
 
+const directionMap = {
+  up: { y: 40, x: 0 },
+  left: { x: -60, y: 0 },
+  right: { x: 60, y: 0 },
+  none: { x: 0, y: 0 },
+}
+
 interface AnimatedSectionProps {
   children: React.ReactNode
   className?: string
@@ -32,13 +39,6 @@ export const AnimatedSection = memo(function AnimatedSection({
     },
     [inViewRef, forwardedRef]
   )
-
-  const directionMap = {
-    up: { y: 40, x: 0 },
-    left: { x: -60, y: 0 },
-    right: { x: 60, y: 0 },
-    none: { x: 0, y: 0 },
-  }
 
   const initial = prefersReduced
     ? { opacity: 1, x: 0, y: 0 }

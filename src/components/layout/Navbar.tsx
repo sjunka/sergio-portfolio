@@ -10,6 +10,34 @@ import { cn } from '@/lib/utils'
 
 const aboutSections = ['about', 'skills', 'experience', 'mobile', 'contact']
 
+/** Hash targets stay plain anchors so CSS smooth scrolling handles them. */
+function NavItem({
+  target,
+  active,
+  children,
+  className,
+  onClick,
+}: {
+  target: string
+  active: boolean
+  children: React.ReactNode
+  className?: string
+  onClick?: () => void
+}) {
+  if (target.startsWith('#')) {
+    return (
+      <a href={target} className={className} onClick={onClick} aria-current={active ? 'true' : undefined}>
+        {children}
+      </a>
+    )
+  }
+  return (
+    <Link to={target} className={className} onClick={onClick} aria-current={active ? 'page' : undefined}>
+      {children}
+    </Link>
+  )
+}
+
 export function Navbar() {
   const { t } = useTranslation()
   const { pathname } = useLocation()
@@ -51,20 +79,21 @@ export function Navbar() {
   useEffect(() => {
     // Off the about page nothing reads activeSection, so there is nothing to observe.
     if (!onAbout) return
-    const observers: IntersectionObserver[] = []
 
-    aboutSections.forEach(id => {
+    const observer = new IntersectionObserver(
+      entries => {
+        const visible = entries.find(entry => entry.isIntersecting)
+        if (visible) setActiveSection(visible.target.id)
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    )
+
+    for (const id of aboutSections) {
       const el = document.getElementById(id)
-      if (!el) return
-      const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActiveSection(id) },
-        { rootMargin: '-40% 0px -55% 0px' }
-      )
-      obs.observe(el)
-      observers.push(obs)
-    })
+      if (el) observer.observe(el)
+    }
 
-    return () => observers.forEach(o => o.disconnect())
+    return () => observer.disconnect()
   }, [onAbout])
 
   useEffect(() => {
@@ -73,36 +102,13 @@ export function Navbar() {
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
-  /** Hash targets stay plain anchors so CSS smooth scrolling handles them. */
-  const NavItem = ({
-    target,
-    children,
-    className,
-    onClick,
-  }: {
-    target: string
-    children: React.ReactNode
-    className?: string
-    onClick?: () => void
-  }) =>
-    target.startsWith('#') ? (
-      <a href={target} className={className} onClick={onClick} aria-current={isActive(target) ? 'true' : undefined}>
-        {children}
-      </a>
-    ) : (
-      <Link to={target} className={className} onClick={onClick} aria-current={isActive(target) ? 'page' : undefined}>
-        {children}
-      </Link>
-    )
-
   return (
     <>
       <a href="#main-content" className="skip-link">{t.nav.skipToContent}</a>
 
       <header
-        role="banner"
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+          'fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,border-color] duration-300',
           scrolled
             ? 'bg-background/80 backdrop-blur-md border-b border-border shadow-sm'
             : 'bg-transparent'
@@ -129,6 +135,7 @@ export function Navbar() {
               <li key={link.target}>
                 <NavItem
                   target={link.target}
+                  active={isActive(link.target)}
                   className={cn(
                     'px-3 py-2 rounded-md text-sm font-medium transition-colors relative block',
                     isActive(link.target)
@@ -166,6 +173,7 @@ export function Navbar() {
             <LanguageToggle />
             <ThemeToggle />
             <button
+              type="button"
               onClick={() => setMenuOpen(o => !o)}
               aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
               aria-expanded={menuOpen}
@@ -203,6 +211,7 @@ export function Navbar() {
                   >
                     <NavItem
                       target={link.target}
+                      active={isActive(link.target)}
                       onClick={() => setMenuOpen(false)}
                       className="block py-3 text-2xl font-semibold text-foreground hover:text-primary transition-colors border-b border-border"
                     >

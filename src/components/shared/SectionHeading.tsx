@@ -8,6 +8,8 @@ interface SectionHeadingProps {
   description?: string
   className?: string
   align?: 'left' | 'center'
+  /** Target of the section's `aria-labelledby`, so the section has a name. */
+  id?: string
 }
 
 export const SectionHeading = memo(function SectionHeading({
@@ -16,13 +18,16 @@ export const SectionHeading = memo(function SectionHeading({
   description,
   className,
   align = 'center',
+  id,
 }: SectionHeadingProps) {
   return (
     <AnimatedSection className={cn(align === 'center' && 'text-center', className)}>
       <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-3">
         {label}
       </span>
-      <h2 className="text-3xl md:text-4xl font-semibold text-foreground mb-4">{title}</h2>
+      <h2 id={id} className="text-3xl md:text-4xl font-semibold text-foreground mb-4">
+        {title}
+      </h2>
       {description && (
         <p className="text-muted-foreground max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
           {description}

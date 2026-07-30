@@ -10,7 +10,7 @@ export function PostRow({ post }: { post: Post }) {
     <li className="post-row group relative border-t border-border">
       {/* Accent rule that fills on hover, echoing a release marker */}
       <span
-        className="absolute -top-px left-0 h-px w-0 bg-primary transition-all duration-500 ease-out group-hover:w-full group-focus-within:w-full"
+        className="absolute -top-px left-0 h-px w-0 bg-primary transition-[width] duration-500 ease-out group-hover:w-full group-focus-within:w-full"
         aria-hidden="true"
       />
       <Link
@@ -28,9 +28,10 @@ export function PostRow({ post }: { post: Post }) {
             {post.readingMinutes} {t.blog.minRead}
           </p>
 
-          <h3 className="mt-2 text-xl font-semibold leading-snug tracking-tight text-foreground transition-colors group-hover:text-primary sm:text-2xl">
+          {/* h2, not h3: the index's only other heading is the h1, so h3 skips a level. */}
+          <h2 className="mt-2 text-xl font-semibold leading-snug tracking-tight text-foreground transition-colors group-hover:text-primary sm:text-2xl">
             {post.title}
-          </h3>
+          </h2>
 
           {post.summary && (
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">{post.summary}</p>

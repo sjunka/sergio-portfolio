@@ -12,6 +12,7 @@ export function LanguageToggle({ className }: LanguageToggleProps) {
 
   return (
     <button
+      type="button"
       onClick={toggleLang}
       disabled={isLangPending}
       aria-label={lang === 'en' ? 'Switch to Spanish' : 'Cambiar a inglés'}

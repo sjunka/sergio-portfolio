@@ -145,6 +145,7 @@ export function Experience() {
     <section id="experience" aria-labelledby="experience-heading" className="py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <SectionHeading
+          id="experience-heading"
           label={t.experience.label}
           title={t.experience.title}
           description={t.experience.description}

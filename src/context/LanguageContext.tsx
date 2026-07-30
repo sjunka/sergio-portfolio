@@ -1,13 +1,6 @@
-import { createContext, use, useState, useEffect, useCallback, useTransition, useDebugValue, type ReactNode } from 'react'
+import { useState, useEffect, useCallback, useMemo, useTransition, useDebugValue, type ReactNode } from 'react'
+import { LanguageContext } from '@/hooks/useLanguage'
 import type { Lang } from '@/i18n'
-
-interface LanguageContextValue {
-  lang: Lang
-  toggleLang: () => void
-  isLangPending: boolean
-}
-
-const LanguageContext = createContext<LanguageContextValue | null>(null)
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(() => {
@@ -37,15 +30,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
-  return (
-    <LanguageContext.Provider value={{ lang, toggleLang, isLangPending }}>
-      {children}
-    </LanguageContext.Provider>
+  const value = useMemo(
+    () => ({ lang, toggleLang, isLangPending }),
+    [lang, toggleLang, isLangPending]
   )
-}
 
-export function useLanguage() {
-  const ctx = use(LanguageContext)
-  if (!ctx) throw new Error('useLanguage must be used within LanguageProvider')
-  return ctx
+  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>
 }

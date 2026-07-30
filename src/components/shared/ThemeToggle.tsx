@@ -15,6 +15,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
       aria-label={theme === 'dark' ? t.theme.toLight : t.theme.toDark}
       className={cn(

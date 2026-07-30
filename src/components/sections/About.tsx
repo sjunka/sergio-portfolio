@@ -21,10 +21,7 @@ function AnimatedCounter({
   const frameRef = useRef<number>(0);
 
   useEffect(() => {
-    if (!inView || prefersReduced) {
-      setCount(target);
-      return;
-    }
+    if (!inView || prefersReduced) return;
     const duration = 1500;
     const start = performance.now();
 
@@ -38,9 +35,10 @@ function AnimatedCounter({
     return () => cancelAnimationFrame(frameRef.current);
   }, [inView, target, prefersReduced]);
 
+  // Reduced motion jumps straight to the final number — derived, not a setState in an effect.
   return (
     <span ref={ref} aria-label={`${target}${suffix}`}>
-      {count}
+      {prefersReduced ? target : count}
       {suffix}
     </span>
   );
@@ -87,6 +85,7 @@ export function About() {
     >
       <div className="max-w-6xl mx-auto">
         <SectionHeading
+          id="about-heading"
           label={t.about.label}
           title={t.about.title}
           description={t.about.description}
