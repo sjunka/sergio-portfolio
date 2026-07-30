@@ -223,6 +223,129 @@
 .prose img {
   @apply rounded-xl border border-border;
 }
+.prose table {
+  @apply w-full border-collapse text-[0.9375rem];
+}
+.prose thead th {
+  @apply border-b border-border pb-2.5 pr-4 text-left align-bottom font-mono text-[0.7rem] font-medium uppercase tracking-[0.1em] text-muted-foreground;
+}
+.prose tbody td {
+  @apply border-b border-border/60 py-3 pr-4 align-top leading-snug;
+}
+.prose tbody tr:last-child td {
+  @apply border-b-0;
+}
+.prose tbody td:first-child {
+  @apply font-medium text-foreground;
+}
+/* Tables and diagrams are the two things wider than the column; both scroll
+   inside their own box rather than making the article scroll sideways. */
+.prose .scroll-x {
+  @apply -mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0;
+}
+
+/* ── Post figures ─────────────────────────────────────────────────────
+   Diagrams are inline SVG rather than images so they read from the theme
+   tokens below. One drawing, correct in light and dark, no second file. */
+.prose figure {
+  @apply my-10;
+}
+.prose figure > svg {
+  @apply block h-auto w-full rounded-xl border border-border bg-card p-4 sm:p-6;
+}
+/* Below `sm` a 640-unit diagram scales down past readable. Give it a floor and
+   let the figure scroll instead, the same deal the tables get. */
+@media (max-width: 639px) {
+  .prose figure:has(> svg) {
+    @apply -mx-4 overflow-x-auto px-4;
+  }
+  .prose figure > svg {
+    min-width: 30rem;
+  }
+}
+.prose figcaption {
+  @apply mt-3 font-mono text-[0.72rem] leading-relaxed text-muted-foreground;
+}
+.prose .shots {
+  @apply my-10 grid gap-4 sm:grid-cols-2;
+}
+.prose .shots img {
+  @apply w-full;
+}
+
+/* Diagram tokens. Every SVG in a post draws from this vocabulary only. */
+.dg-node {
+  fill: hsl(var(--muted));
+  stroke: hsl(var(--border));
+}
+.dg-node-accent {
+  fill: hsl(var(--primary) / 0.13);
+  stroke: hsl(var(--primary) / 0.5);
+}
+.dg-node-warn {
+  fill: hsl(38 92% 50% / 0.14);
+  stroke: hsl(38 92% 45% / 0.5);
+}
+.dg-plate {
+  fill: none;
+  stroke: hsl(var(--border));
+  stroke-dasharray: 5 4;
+}
+.dg-node,
+.dg-node-accent,
+.dg-node-warn,
+.dg-plate {
+  stroke-width: 1;
+}
+.dg-flow,
+.dg-flow-accent,
+.dg-flow-dashed {
+  fill: none;
+  stroke-linecap: round;
+}
+.dg-flow {
+  stroke: hsl(var(--muted-foreground) / 0.7);
+  stroke-width: 1.2;
+}
+.dg-flow-accent {
+  stroke: hsl(var(--primary));
+  stroke-width: 1.6;
+}
+.dg-flow-dashed {
+  stroke: hsl(var(--muted-foreground) / 0.55);
+  stroke-width: 1.2;
+  stroke-dasharray: 4 3;
+}
+.dg-head {
+  fill: hsl(var(--muted-foreground) / 0.7);
+  stroke: none;
+}
+.dg-head-accent {
+  fill: hsl(var(--primary));
+  stroke: none;
+}
+.dg-t,
+.dg-s,
+.dg-m {
+  stroke: none;
+}
+.dg-t {
+  fill: hsl(var(--foreground));
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.dg-s {
+  fill: hsl(var(--muted-foreground));
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 9.5px;
+}
+.dg-m {
+  fill: hsl(var(--primary));
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.04em;
+}
 
 /* ── Marquee ──────────────────────────────────────────────────────────
    Two identical lists side by side; shifting one full copy loops seamlessly. */
