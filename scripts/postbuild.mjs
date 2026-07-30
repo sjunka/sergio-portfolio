@@ -25,12 +25,14 @@ for (const file of await readdir(contentDir)) {
 posts.sort((a, b) => b.date.localeCompare(a.date))
 
 const newest = posts[0]?.date ?? new Date().toISOString().slice(0, 10)
+// Trailing slashes throughout: Pages 301s to that form, and a sitemap that lists
+// the pre-redirect URL asks crawlers to index something that doesn't serve a 200.
 const urls = [
   { loc: site, lastmod: newest, priority: '1.0', changefreq: 'weekly' },
-  { loc: `${site}about`, lastmod: newest, priority: '0.9', changefreq: 'monthly' },
-  { loc: `${site}blog`, lastmod: newest, priority: '0.9', changefreq: 'weekly' },
+  { loc: `${site}about/`, lastmod: newest, priority: '0.9', changefreq: 'monthly' },
+  { loc: `${site}blog/`, lastmod: newest, priority: '0.9', changefreq: 'weekly' },
   ...posts.map(p => ({
-    loc: `${site}blog/${p.slug}`,
+    loc: `${site}blog/${p.slug}/`,
     lastmod: p.date,
     priority: '0.7',
     changefreq: 'yearly',

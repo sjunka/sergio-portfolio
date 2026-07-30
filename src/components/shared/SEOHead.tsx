@@ -50,7 +50,9 @@ export interface SEOHeadProps {
 export function SEOHead({ title, description, path, article }: SEOHeadProps = {}) {
   const pageTitle = title ?? defaultTitle
   const pageDescription = description ?? defaultDescription
-  const url = `${personal.siteUrl}${path ?? ''}`
+  // Pages serves these routes as directories and 301s to the trailing-slash form,
+  // so the canonical has to match or it fights the redirect.
+  const url = path ? `${personal.siteUrl}${path}/` : personal.siteUrl
   const image = `${personal.siteUrl}og-image.jpg`
 
   const schema = article
