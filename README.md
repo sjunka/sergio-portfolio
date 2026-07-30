@@ -117,6 +117,14 @@ Playwright keeps a trace on first retry, plus a screenshot and video for anythin
 that fails, under `test-results/`. `npm run test:e2e:report` opens the HTML report.
 All three directories are gitignored.
 
+### CI
+
+`.github/workflows/deploy.yml` runs lint, `tsc -b`, the Vitest suite and the full
+Playwright suite on every push to `main` and every pull request against it. The
+deploy job has `needs: test`, so a red suite blocks the release; pull requests get
+the gate without deploying. A failing e2e run uploads its HTML report as a
+`playwright-report` artifact, kept for 7 days.
+
 ### Health score
 
 `npm run doctor` runs [react-doctor](https://react.doctor). Current score:
