@@ -4,7 +4,7 @@
  * router take over. Also regenerates the sitemap from the content directory,
  * because a hand-maintained one silently goes stale on every new post.
  */
-import { copyFile, readdir, readFile, writeFile } from 'node:fs/promises'
+import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 const dist = 'dist'
@@ -53,4 +53,20 @@ ${urls
 `
 
 await writeFile(join(dist, 'sitemap.xml'), sitemap)
-console.log(`postbuild: 404.html written, sitemap has ${urls.length} urls`)
+
+/*
+ * 404.html alone makes deep links *work*, but Pages serves it with a 404 status
+ * and search engines don't index a 404. Writing a real index.html at each known
+ * route makes those URLs return 200; the router still decides what renders.
+ * The shell is identical for every route, so a crawler that doesn't execute JS
+ * sees the home page's title and description — prerendering is what fixes that.
+ */
+const routes = ['about', 'blog', ...posts.map(p => `blog/${p.slug}`)]
+for (const route of routes) {
+  await mkdir(join(dist, route), { recursive: true })
+  await copyFile(join(dist, 'index.html'), join(dist, route, 'index.html'))
+}
+
+console.log(
+  `postbuild: 404.html written, ${routes.length} routes emitted, sitemap has ${urls.length} urls`
+)
