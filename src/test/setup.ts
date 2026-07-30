@@ -1,4 +1,9 @@
 import '@testing-library/jest-dom'
+import { configure } from '@testing-library/react'
+
+// The integration tests wait on React.lazy chunks — AboutPage alone pulls five.
+// Testing Library's 1s default is enough on a dev machine and not on a CI runner.
+configure({ asyncUtilTimeout: 5000 })
 
 // jsdom 29 requires explicit localStorage setup
 const store: Record<string, string> = {}
