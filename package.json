@@ -17,6 +17,7 @@
     "test:e2e:screenshots": "playwright test screenshots",
     "test:all": "npm run lint && npm run test:unit && npm run test:e2e",
     "doctor": "npx -y react-doctor@latest . --verbose",
+    "og": "node scripts/og.mjs",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },

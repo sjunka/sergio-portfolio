@@ -53,7 +53,10 @@ export function SEOHead({ title, description, path, article }: SEOHeadProps = {}
   // Pages serves these routes as directories and 301s to the trailing-slash form,
   // so the canonical has to match or it fights the redirect.
   const url = path ? `${personal.siteUrl}${path}/` : personal.siteUrl
-  const image = `${personal.siteUrl}og-image.jpg`
+  // Filename is versioned on purpose: WhatsApp and LinkedIn cache a preview by
+  // image URL for weeks, so a redesign only ships if the URL changes with it.
+  const image = `${personal.siteUrl}og-card.jpg`
+  const imageAlt = 'Sergio Junca, senior mobile engineer — React Native, iOS and Android'
 
   const schema = article
     ? {
@@ -82,14 +85,17 @@ export function SEOHead({ title, description, path, article }: SEOHeadProps = {}
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={pageDescription} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:type" content="image/jpeg" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={imageAlt} />
       {article ? <meta property="article:published_time" content={article.published} /> : null}
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={pageTitle} />
       <meta name="twitter:description" content={pageDescription} />
       <meta name="twitter:image" content={image} />
+      <meta name="twitter:image:alt" content={imageAlt} />
 
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
     </Helmet>
