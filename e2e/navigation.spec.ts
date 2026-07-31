@@ -51,7 +51,9 @@ test.describe('navbar', () => {
 
   test('scroll position resets on navigation', async ({ page }) => {
     desktopOnly(page)
-    await gotoApp(page, '/blog')
+    // The landing page, not /blog: three posts render just under a viewport tall
+    // on CI's font metrics, so /blog had no room to scroll the 100px this asserts.
+    await gotoApp(page, '/')
     await page.mouse.wheel(0, 800)
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100)
 
