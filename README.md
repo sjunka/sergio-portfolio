@@ -40,10 +40,10 @@ Refresh them after a UI change rather than editing them by hand.
 
 ## The share card
 
-![The social share card: name, role, three marks, and the site's phone home screen](public/og-card.jpg)
+![The social share card: name, role, a one-line summary, the latest post, and a portrait bleeding off the right edge](public/share-card.jpg)
 
 What WhatsApp, LinkedIn and X show when the link is pasted. It is a source file,
-`scripts/og-card.html`, rendered to `public/og-card.jpg` by `npm run og` through
+`scripts/og-card.html`, rendered to `public/share-card.jpg` by `npm run og` through
 the Playwright already installed for the e2e suite — so it stays reviewable in a
 diff instead of living as an opaque binary.
 

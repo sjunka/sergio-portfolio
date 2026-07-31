@@ -29,7 +29,12 @@ test.describe('metadata', () => {
 
       await expect(page).toHaveTitle(/Sergio Junca/)
       await expect(page.locator('meta[name="description"]').last()).toHaveAttribute('content', /.{50,}/)
-      await expect(page.locator('meta[property="og:image"]').last()).toHaveAttribute('content', /og-card\.jpg$/)
+      // Not pinned to a filename: the card gets renamed on every redesign to
+      // bust the preview caches, and that rename shouldn't be a test edit.
+      await expect(page.locator('meta[property="og:image"]').last()).toHaveAttribute(
+        'content',
+        new RegExp(`^${site}[\\w-]+\\.jpg$`)
+      )
       await expect(page.locator('meta[property="og:image:alt"]').last()).toHaveAttribute('content', /.+/)
       await expect(page.locator('meta[property="og:url"]').last()).toHaveAttribute('content', canonical)
     })

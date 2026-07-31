@@ -1,5 +1,5 @@
 /**
- * Renders scripts/og-card.html to public/og-card.jpg at 1200x630.
+ * Renders scripts/og-card.html to public/share-card.jpg at 1200x630.
  * Playwright is already here for the e2e suite, so the card stays a source file
  * in git rather than a binary somebody has to reopen in a design tool.
  */
@@ -7,7 +7,7 @@ import { chromium } from '@playwright/test'
 import { pathToFileURL } from 'node:url'
 import { resolve } from 'node:path'
 
-const out = 'public/og-card.jpg'
+const out = 'public/share-card.jpg'
 
 const browser = await chromium.launch()
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 2 })
