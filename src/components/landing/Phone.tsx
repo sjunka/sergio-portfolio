@@ -47,14 +47,14 @@ function StatusBar({ className }: { className?: string }) {
   const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
 
   return (
-    <div className={cn('flex items-center justify-between px-6 pt-3 text-[10px] font-mono text-white/70', className)}>
+    <div className={cn('flex items-center justify-between px-6 pt-3 text-[10px] font-mono text-[hsl(var(--phone-ink)/0.7)]', className)}>
       <span aria-hidden="true">{time}</span>
       <span className="flex items-end gap-[3px]" aria-hidden="true">
         {[4, 6, 8, 10].map(h => (
-          <i key={h} className="w-[3px] rounded-sm bg-white/60" style={{ height: h }} />
+          <i key={h} className="w-[3px] rounded-sm bg-[hsl(var(--phone-ink)/0.6)]" style={{ height: h }} />
         ))}
-        <i className="ml-1.5 h-[9px] w-[18px] rounded-[3px] border border-white/50 p-[2px]">
-          <i className="block h-full w-2/3 rounded-[1px] bg-white/60" />
+        <i className="ml-1.5 h-[9px] w-[18px] rounded-[3px] border border-[hsl(var(--phone-ink)/0.5)] p-[2px]">
+          <i className="block h-full w-2/3 rounded-[1px] bg-[hsl(var(--phone-ink)/0.6)]" />
         </i>
       </span>
     </div>
@@ -76,18 +76,19 @@ function AppTile({
 }) {
   const inner = (
     <>
+      {/* The glyph stays white in both themes: it sits on its own vivid gradient, not on the screen. */}
       <span
-        className="grid size-14 place-items-center rounded-[1.15rem] text-white shadow-lg shadow-black/40 ring-1 ring-white/15"
+        className="grid size-14 place-items-center rounded-[1.15rem] text-white shadow-lg shadow-black/30 ring-1 ring-white/15"
         style={{ backgroundImage: gradient }}
       >
         <span className="size-7">{glyphs[glyph]}</span>
       </span>
-      <span className="text-[10px] font-medium text-white/85">{label}</span>
+      <span className="text-[10px] font-medium text-[hsl(var(--phone-ink)/0.85)]">{label}</span>
     </>
   )
 
   const classes =
-    'phone-item flex flex-col items-center gap-2 rounded-xl outline-none transition-transform duration-150 active:scale-[0.93] focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
+    'phone-item flex flex-col items-center gap-2 rounded-xl outline-none transition-transform duration-150 active:scale-[0.93] focus-visible:ring-2 focus-visible:ring-[hsl(var(--phone-ink)/0.7)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
 
   return href ? (
     <a href={href} download={href.endsWith('.pdf') || undefined} className={classes}>
@@ -114,8 +115,8 @@ function HomeScreen({ posts }: { posts: Post[] }) {
   return (
     <div className="flex h-full flex-col">
       <div className="px-7 pt-8">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">sergiojunca.online</p>
-        <p className="mt-1 text-sm font-semibold text-white">{personal.name}</p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[hsl(var(--phone-ink)/0.45)]">sergiojunca.online</p>
+        <p className="mt-1 text-sm font-semibold text-[hsl(var(--phone-ink))]">{personal.name}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-x-6 gap-y-7 px-8 pt-8">
@@ -128,22 +129,22 @@ function HomeScreen({ posts }: { posts: Post[] }) {
       {latest && (
         <Link
           to={`/blog/${latest.slug}`}
-          className="phone-item mx-7 mt-9 block rounded-2xl bg-white/[0.06] p-4 ring-1 ring-white/10 outline-none transition-colors hover:bg-white/[0.11] focus-visible:bg-white/[0.14]"
+          className="phone-item mx-7 mt-9 block rounded-2xl bg-[hsl(var(--phone-ink)/0.06)] p-4 ring-1 ring-[hsl(var(--phone-ink)/0.1)] outline-none transition-colors hover:bg-[hsl(var(--phone-ink)/0.11)] focus-visible:bg-[hsl(var(--phone-ink)/0.14)]"
         >
-          <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-white/40">
-            {t.blog.label} <span className="text-white/25">/</span> {latest.number}
+          <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-[hsl(var(--phone-ink)/0.4)]">
+            {t.blog.label} <span className="text-[hsl(var(--phone-ink)/0.25)]">/</span> {latest.number}
           </p>
-          <p className="mt-2 line-clamp-2 text-[13px] font-semibold leading-snug text-white/90">{latest.title}</p>
-          <p className="mt-2.5 font-mono text-[9px] text-white/45">
-            {formatDate(latest.date, lang)} <span className="text-white/25">/</span> {latest.readingMinutes}{' '}
+          <p className="mt-2 line-clamp-2 text-[13px] font-semibold leading-snug text-[hsl(var(--phone-ink)/0.9)]">{latest.title}</p>
+          <p className="mt-2.5 font-mono text-[9px] text-[hsl(var(--phone-ink)/0.45)]">
+            {formatDate(latest.date, lang)} <span className="text-[hsl(var(--phone-ink)/0.25)]">/</span> {latest.readingMinutes}{' '}
             {t.blog.minRead}
           </p>
         </Link>
       )}
 
       <div className="mt-auto flex justify-center gap-1.5 pb-5" aria-hidden="true">
-        <i className="size-1 rounded-full bg-white/80" />
-        <i className="size-1 rounded-full bg-white/25" />
+        <i className="size-1 rounded-full bg-[hsl(var(--phone-ink)/0.8)]" />
+        <i className="size-1 rounded-full bg-[hsl(var(--phone-ink)/0.25)]" />
       </div>
     </div>
   )
@@ -155,21 +156,21 @@ function BlogScreen({ posts }: { posts: Post[] }) {
   return (
     <div className="flex h-full flex-col">
       <div className="px-6 pt-7">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">{t.blog.label}</p>
-        <p className="mt-1 text-lg font-semibold leading-tight text-white">{t.blog.title}</p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[hsl(var(--phone-ink)/0.45)]">{t.blog.label}</p>
+        <p className="mt-1 text-lg font-semibold leading-tight text-[hsl(var(--phone-ink))]">{t.blog.title}</p>
       </div>
 
-      <ul className="mt-5 divide-y divide-white/10 border-t border-white/10">
+      <ul className="mt-5 divide-y divide-[hsl(var(--phone-ink)/0.1)] border-t border-[hsl(var(--phone-ink)/0.1)]">
         {posts.slice(0, 3).map(post => (
           <li key={post.slug}>
             <Link
               to={`/blog/${post.slug}`}
-              className="block px-6 py-3.5 outline-none transition-colors hover:bg-white/5 focus-visible:bg-white/10"
+              className="block px-6 py-3.5 outline-none transition-colors hover:bg-[hsl(var(--phone-ink)/0.05)] focus-visible:bg-[hsl(var(--phone-ink)/0.1)]"
             >
-              <p className="font-mono text-[9px] uppercase tracking-wider text-white/40">
+              <p className="font-mono text-[9px] uppercase tracking-wider text-[hsl(var(--phone-ink)/0.4)]">
                 {post.number} · {formatDate(post.date, lang)}
               </p>
-              <p className="mt-1 line-clamp-2 text-[13px] font-medium leading-snug text-white/90">{post.title}</p>
+              <p className="mt-1 line-clamp-2 text-[13px] font-medium leading-snug text-[hsl(var(--phone-ink)/0.9)]">{post.title}</p>
             </Link>
           </li>
         ))}
@@ -177,7 +178,7 @@ function BlogScreen({ posts }: { posts: Post[] }) {
 
       <Link
         to="/blog"
-        className="mx-6 mt-auto mb-6 rounded-xl bg-white/10 py-2.5 text-center text-[11px] font-semibold text-white/90 ring-1 ring-white/15 transition-colors hover:bg-white/20"
+        className="mx-6 mt-auto mb-6 rounded-xl bg-[hsl(var(--phone-ink)/0.1)] py-2.5 text-center text-[11px] font-semibold text-[hsl(var(--phone-ink)/0.9)] ring-1 ring-[hsl(var(--phone-ink)/0.15)] transition-colors hover:bg-[hsl(var(--phone-ink)/0.2)]"
       >
         {t.landing.allPosts}
       </Link>
@@ -241,7 +242,8 @@ export function Phone({ screen, posts }: { screen: 'home' | 'blog'; posts: Post[
   }, [screen])
 
   return (
-    <div className="relative" style={{ perspective: 1400 }}>
+    /* `phone` carries the device's own light/dark tokens — see globals.css. */
+    <div className="phone relative" style={{ perspective: 1400 }}>
       {/* Ambient light behind the device */}
       <div
         className="pointer-events-none absolute left-1/2 top-1/2 -z-10 size-[24rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 blur-3xl"
@@ -253,16 +255,10 @@ export function Phone({ screen, posts }: { screen: 'home' | 'blog'; posts: Post[
         ref={frameRef}
         role="group"
         aria-label={t.landing.phoneLabel}
-        className="relative mx-auto aspect-[9/19] w-[17rem] rounded-[2.75rem] p-[3px] shadow-2xl shadow-black/50 sm:w-[19rem]"
-        style={{
-          backgroundImage: 'linear-gradient(160deg,hsl(220 20% 42%),hsl(220 25% 14%) 45%,hsl(220 20% 38%))',
-          transformStyle: 'preserve-3d',
-        }}
+        className="relative mx-auto aspect-[9/19] w-[17rem] rounded-[2.75rem] bg-[image:var(--phone-frame)] p-[3px] shadow-2xl shadow-black/30 sm:w-[19rem]"
+        style={{ transformStyle: 'preserve-3d' }}
       >
-        <div
-          className="relative h-full w-full overflow-hidden rounded-[2.6rem]"
-          style={{ backgroundImage: 'linear-gradient(165deg,hsl(240 45% 14%),hsl(222 47% 7%) 55%,hsl(271 40% 12%))' }}
-        >
+        <div className="relative h-full w-full overflow-hidden rounded-[2.6rem] bg-[image:var(--phone-glass)]">
           {/* Dynamic island */}
           <div
             className="absolute left-1/2 top-2.5 z-10 h-5 w-[5.5rem] -translate-x-1/2 rounded-full bg-black"
@@ -276,7 +272,7 @@ export function Phone({ screen, posts }: { screen: 'home' | 'blog'; posts: Post[
 
           {/* Home indicator */}
           <div
-            className="absolute bottom-1.5 left-1/2 h-[3px] w-24 -translate-x-1/2 rounded-full bg-white/35"
+            className="absolute bottom-1.5 left-1/2 h-[3px] w-24 -translate-x-1/2 rounded-full bg-[hsl(var(--phone-ink)/0.35)]"
             aria-hidden="true"
           />
         </div>

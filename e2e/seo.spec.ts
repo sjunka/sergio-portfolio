@@ -29,7 +29,8 @@ test.describe('metadata', () => {
 
       await expect(page).toHaveTitle(/Sergio Junca/)
       await expect(page.locator('meta[name="description"]').last()).toHaveAttribute('content', /.{50,}/)
-      await expect(page.locator('meta[property="og:image"]').last()).toHaveAttribute('content', /og-image\.jpg$/)
+      await expect(page.locator('meta[property="og:image"]').last()).toHaveAttribute('content', /og-card\.jpg$/)
+      await expect(page.locator('meta[property="og:image:alt"]').last()).toHaveAttribute('content', /.+/)
       await expect(page.locator('meta[property="og:url"]').last()).toHaveAttribute('content', canonical)
     })
   }
@@ -81,6 +82,14 @@ test.describe('crawlability', () => {
     const res = await request.get('/404.html')
     expect(res.status()).toBe(200)
     expect(await res.text()).toContain('<div id="root">')
+  })
+
+  test('the og card is actually served at the URL the meta tags advertise', async ({ page, request }) => {
+    await gotoApp(page, '/')
+    const src = await page.locator('meta[property="og:image"]').last().getAttribute('content')
+    const res = await request.get(new URL(src!).pathname)
+    expect(res.status()).toBe(200)
+    expect(res.headers()['content-type']).toContain('image/jpeg')
   })
 
   test('robots meta allows indexing', async ({ page }) => {

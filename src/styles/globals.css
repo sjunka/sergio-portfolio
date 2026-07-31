@@ -58,6 +58,23 @@
   }
 }
 
+/*
+ * The landing phone is a device mockup, not a screenshot, so its screen has to
+ * follow the site theme — a dark phone on a light page reads as a broken image.
+ * Everything inside it derives from --phone-ink, so the whole device flips here.
+ */
+.phone {
+  --phone-frame: linear-gradient(160deg, hsl(220 14% 82%), hsl(220 10% 60%) 45%, hsl(220 14% 86%));
+  --phone-glass: linear-gradient(165deg, hsl(240 60% 98%), hsl(0 0% 100%) 55%, hsl(271 55% 97%));
+  --phone-ink: 222 47% 11%;
+}
+
+.dark .phone {
+  --phone-frame: linear-gradient(160deg, hsl(220 20% 42%), hsl(220 25% 14%) 45%, hsl(220 20% 38%));
+  --phone-glass: linear-gradient(165deg, hsl(240 45% 14%), hsl(222 47% 7%) 55%, hsl(271 40% 12%));
+  --phone-ink: 0 0% 100%;
+}
+
 @layer base {
   * {
     @apply border-border;
