@@ -55,8 +55,8 @@ export function SEOHead({ title, description, path, article }: SEOHeadProps = {}
   const url = path ? `${personal.siteUrl}${path}/` : personal.siteUrl
   // Filename is versioned on purpose: WhatsApp and LinkedIn cache a preview by
   // image URL for weeks, so a redesign only ships if the URL changes with it.
-  const image = `${personal.siteUrl}og-card.jpg`
-  const imageAlt = 'Sergio Junca, senior mobile engineer — React Native, iOS and Android'
+  const image = `${personal.siteUrl}share-card.jpg`
+  const imageAlt = 'Sergio Junca, senior software engineer — ten years shipping production apps'
 
   const schema = article
     ? {
