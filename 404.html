@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Resolve language and theme before the first paint. A hardcoded class on
+      // <html> would flash the wrong theme at everyone whose choice differs.
+      (function () {
+        var el = document.documentElement;
+        var s = localStorage.getItem('language');
+        el.lang = s === 'en' || s === 'es' ? s : navigator.language.startsWith('es') ? 'es' : 'en';
+
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        el.classList.add(t);
+      })();
+    </script>
+    <meta name="theme-color" content="#0A0F1E" />
+
+    <title>Sergio Junca | Senior React Native Engineer | iOS &amp; Android</title>
+    <meta
+      name="description"
+      content="Senior Mobile Engineer with 10+ years building production React Native apps for fintech, gaming, healthcare, and logistics. Available for senior roles globally."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Sergio Junca" />
+
+    <!--
+      No static canonical here on purpose. SEOHead emits a per-route one, and on
+      React 19 react-helmet-async delegates to React's head hoisting, which does
+      not replace tags that were already in this file — a static canonical would
+      leave every URL serving two. The og/twitter tags below stay because social
+      crawlers don't run JS and would otherwise get no preview at all; they are
+      the home page's values until the site is prerendered.
+    -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/pwa-192.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Sergio Junca | Senior React Native Engineer" />
+    <meta property="og:description" content="10+ years shipping production mobile apps across iOS &amp; Android." />
+    <meta property="og:url" content="https://sergiojunca.online/" />
+    <meta property="og:image" content="https://sergiojunca.online/share-card.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Sergio Junca, senior software engineer — ten years shipping production apps" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Sergio Junca | Senior React Native Engineer" />
+    <meta name="twitter:description" content="10+ years shipping production mobile apps across iOS &amp; Android." />
+    <meta name="twitter:image" content="https://sergiojunca.online/share-card.jpg" />
+    <meta name="twitter:image:alt" content="Sergio Junca, senior software engineer — ten years shipping production apps" />
+    <script type="module" crossorigin src="/assets/index-Cy6UCrhb.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-BYbx6iT9.js">
+    <link rel="modulepreload" crossorigin href="/assets/motion-C1tg1Zn9.js">
+    <link rel="modulepreload" crossorigin href="/assets/personal-3M3rWJGT.js">
+    <link rel="modulepreload" crossorigin href="/assets/SEOHead-C76_ZPLa.js">
+    <link rel="modulepreload" crossorigin href="/assets/utils-BVeSXLFv.js">
+    <link rel="modulepreload" crossorigin href="/assets/motion-Ba1b5zuE.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-DQ462m0n.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-xmUsdRml.css">
+  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
