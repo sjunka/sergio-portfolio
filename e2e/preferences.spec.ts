@@ -23,6 +23,24 @@ test.describe('theme', () => {
     await expect.poll(bg).not.toBe(light)
   })
 
+  test('repaints the landing phone too, not just the page around it', async ({ page }) => {
+    await gotoApp(page, '/')
+    // The phone screen used to be hardcoded dark, so light mode left a dark slab
+    // on a white page. Its ink and glass are theme tokens now; both must flip.
+    const device = () =>
+      page.evaluate(() => {
+        const el = document.querySelector('.phone')!
+        const s = getComputedStyle(el)
+        return { ink: s.getPropertyValue('--phone-ink').trim(), glass: s.getPropertyValue('--phone-glass').trim() }
+      })
+    const light = await device()
+    expect(light.ink).not.toBe('')
+
+    await page.getByRole('button', { name: en.theme.toDark }).click()
+    await expect.poll(async () => (await device()).ink).not.toBe(light.ink)
+    expect((await device()).glass).not.toBe(light.glass)
+  })
+
   test('paints the stored theme before first paint, with no light flash', async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem('theme', 'dark'))
     await page.goto('/')

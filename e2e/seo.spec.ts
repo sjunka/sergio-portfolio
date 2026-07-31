@@ -90,6 +90,20 @@ test.describe('crawlability', () => {
     const res = await request.get(new URL(src!).pathname)
     expect(res.status()).toBe(200)
     expect(res.headers()['content-type']).toContain('image/jpeg')
+
+    // A card whose real size doesn't match og:image:width/height gets recropped
+    // or dropped to a thumbnail by WhatsApp, so the declared numbers have to be true.
+    const size = await page.evaluate(
+      src =>
+        new Promise<[number, number]>((resolve, reject) => {
+          const img = new Image()
+          img.onload = () => resolve([img.naturalWidth, img.naturalHeight])
+          img.onerror = reject
+          img.src = src
+        }),
+      new URL(src!).pathname
+    )
+    expect(size).toEqual([1200, 630])
   })
 
   test('robots meta allows indexing', async ({ page }) => {
