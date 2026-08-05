@@ -37,6 +37,7 @@ export async function gotoApp(page: Page, path: string) {
 }
 
 export const posts = [
+  { slug: 'see-what-you-generated', title: 'If you generate something visual, you need a way to look at it' },
   { slug: 'deck-as-a-program', title: 'I stopped making slides and wrote a program that makes them' },
   { slug: 'hiring-mobile-engineers', title: 'What I look for when I interview a mobile engineer' },
   { slug: 'boring-releases', title: 'The best mobile release is the one nobody notices' },
