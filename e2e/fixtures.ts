@@ -40,7 +40,7 @@ export const posts = [
   { slug: 'thirty-four-slides-to-three', title: 'Cutting 34 slides down to 3 is not summarising' },
   { slug: 'two-renderers-one-deck', title: 'I shipped the same three slides twice, on purpose' },
   { slug: 'same-module-twice', title: 'Writing the same native module twice tells you what your spec left out' },
-  { slug: 'webview-remount', title: 'Your WebView reloads because the source prop is a new object' },
+  { slug: 'webview-micro-app', title: 'A web screen inside a native app is a trust boundary, not a component' },
   { slug: 'mape-k-loop', title: 'MAPE-K, or how to keep adaptation out of your business logic' },
   { slug: 'iot-cps-cpas', title: 'IoT measures, a CPS acts, a CPAS rewrites how it acts' },
   { slug: 'hiring-mobile-engineers', title: 'What I look for when I interview a mobile engineer' },
