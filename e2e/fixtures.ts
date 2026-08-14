@@ -37,6 +37,7 @@ export async function gotoApp(page: Page, path: string) {
 }
 
 export const posts = [
+  { slug: 'two-renderers-one-deck', title: 'I shipped the same three slides twice, on purpose' },
   { slug: 'same-module-twice', title: 'Writing the same native module twice tells you what your spec left out' },
   { slug: 'webview-remount', title: 'Your WebView reloads because the source prop is a new object' },
   { slug: 'see-what-you-generated', title: 'If you generate something visual, you need a way to look at it' },
