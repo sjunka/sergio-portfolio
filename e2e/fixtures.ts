@@ -38,7 +38,7 @@ export async function gotoApp(page: Page, path: string) {
 
 export const posts = [
   { slug: 'thirty-four-slides-to-three', title: 'Cutting 34 slides down to 3 is not summarising' },
-  { slug: 'two-renderers-one-deck', title: 'I shipped the same three slides twice, on purpose' },
+  { slug: 'agile-waterfall-cyber-physical', title: 'Agile and waterfall both fail cyber-physical systems, from opposite ends' },
   { slug: 'one-contract-two-platforms', title: 'What a TurboModule spec cannot tell you' },
   { slug: 'webview-micro-app', title: 'A web screen inside a native app is a trust boundary, not a component' },
   { slug: 'mape-k-loop', title: 'MAPE-K, or how to keep adaptation out of your business logic' },
