@@ -1,3 +1,4 @@
+import { readdirSync } from 'node:fs'
 import { test as base, expect, type Page } from '@playwright/test'
 import { en } from '../src/i18n/en'
 import { es } from '../src/i18n/es'
@@ -34,6 +35,20 @@ export function desktopOnly(page: Page) {
 export async function gotoApp(page: Page, path: string) {
   await page.goto(path)
   await expect(page.getByRole('banner')).toBeVisible()
+}
+
+/**
+ * Slugs with no `.es.md` next to them. Empty once every post is translated, which
+ * is why the fallback test reads this instead of naming a post that will not stay
+ * untranslated.
+ */
+export function untranslatedSlugs() {
+  const dir = 'src/content/blog'
+  const files = readdirSync(dir)
+  return files
+    .filter(f => f.endsWith('.en.md'))
+    .map(f => f.replace('.en.md', ''))
+    .filter(slug => !files.includes(`${slug}.es.md`))
 }
 
 export const posts = [

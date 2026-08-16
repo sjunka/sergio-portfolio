@@ -45,10 +45,16 @@ describe('getPosts', () => {
   })
 
   it('prefers the requested language and falls back to english', () => {
-    const es = getPosts('es')
-    // hiring-mobile-engineers has an es translation; the others are en-only.
-    expect(es.find(p => p.slug === 'hiring-mobile-engineers')?.lang).toBe('es')
-    expect(es.find(p => p.slug === 'boring-releases')?.lang).toBe('en')
+    // Ground truth from the content directory, so this stays honest as posts
+    // gain translations instead of pinning two slugs that will drift.
+    const translated = new Set(
+      Object.keys(import.meta.glob('../content/blog/*.es.md')).map(path =>
+        path.split('/').pop()!.replace('.es.md', '')
+      )
+    )
+    for (const post of getPosts('es')) {
+      expect(post.lang).toBe(translated.has(post.slug) ? 'es' : 'en')
+    }
   })
 
   it('only loads lang-suffixed files, so CLAUDE.md is not published as a post', () => {
