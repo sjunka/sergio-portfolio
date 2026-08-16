@@ -14,7 +14,15 @@ import { prefersReducedMotion } from '@/lib/motion'
 
 gsap.registerPlugin(ScrollTrigger)
 
-marked.use({ gfm: true })
+marked.use({
+  gfm: true,
+  // A comparison table is wider than a 46rem column on a phone. Wrapping it at
+  // render time keeps the scroll inside the table instead of the whole article.
+  hooks: {
+    postprocess: (html: string) =>
+      html.replace(/<table>/g, '<div class="scroll-x"><table>').replace(/<\/table>/g, '</table></div>'),
+  },
+})
 
 export function BlogPost() {
   const { slug } = useParams<{ slug: string }>()
