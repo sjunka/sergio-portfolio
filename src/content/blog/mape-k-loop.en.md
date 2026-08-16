@@ -10,7 +10,7 @@ The failure mode is easy to picture. A pump controller starts as one function th
 MAPE-K exists to prevent exactly that. Proposed by IBM in 2003 as the core of autonomic computing, it is still the reference architecture for self-adaptive systems, and the reason it survived is not sophistication. It is that it draws one line: the logic that does the work and the logic that adapts the work are separate components, and they meet only through shared knowledge.
 
 <figure>
-<svg viewBox="0 0 640 282" role="img" aria-label="The MAPE-K loop reading and writing shared Knowledge, acting on a managed physical system, and validating plans against a digital twin">
+<svg viewBox="0 -14 640 296" role="img" aria-label="The MAPE-K loop reading and writing shared Knowledge, acting on a managed physical system, and validating plans against a digital twin">
   <defs>
     <marker id="mk-head" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" class="dg-head"/></marker>
     <marker id="mk-head-a" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" class="dg-head-accent"/></marker>
@@ -20,7 +20,7 @@ MAPE-K exists to prevent exactly that. Proposed by IBM in 2003 as the core of au
   <text x="59" y="144" text-anchor="middle" class="dg-s">models, goals,</text>
   <text x="59" y="158" text-anchor="middle" class="dg-s">history</text>
   <rect x="142" y="8" width="250" height="262" rx="10" class="dg-plate"/>
-  <text x="142" y="0" class="dg-m">MANAGING SYSTEM</text>
+  <text x="142" y="-3" class="dg-m">MANAGING SYSTEM</text>
   <rect x="162" y="32" width="210" height="44" rx="6" class="dg-node-accent"/>
   <text x="178" y="52" class="dg-t">Monitor</text>
   <text x="178" y="67" class="dg-s">sensors, connectivity, load</text>
