@@ -13,8 +13,10 @@ export type Post = {
   readingMinutes: number
 }
 
+// Only `<slug>.<lang>.md` is a post, so notes that live alongside the content
+// (CLAUDE.md, drafts) are not published as one.
 // ponytail: every post body ships in the blog chunk. Swap to a lazy glob past ~30 posts.
-const files = import.meta.glob('../content/blog/*.md', {
+const files = import.meta.glob('../content/blog/*.{en,es}.md', {
   query: '?raw',
   import: 'default',
   eager: true,

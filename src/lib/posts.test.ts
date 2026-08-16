@@ -51,6 +51,12 @@ describe('getPosts', () => {
     expect(es.find(p => p.slug === 'boring-releases')?.lang).toBe('en')
   })
 
+  it('only loads lang-suffixed files, so CLAUDE.md is not published as a post', () => {
+    for (const post of getPosts('en')) {
+      expect(post.slug).toMatch(/^[a-z0-9-]+$/)
+    }
+  })
+
   it('estimates at least one reading minute per post', () => {
     for (const post of getPosts('en')) {
       expect(post.readingMinutes).toBeGreaterThanOrEqual(1)

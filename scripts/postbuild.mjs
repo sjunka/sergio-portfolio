@@ -15,8 +15,11 @@ await copyFile(join(dist, 'index.html'), join(dist, '404.html'))
 
 const posts = []
 for (const file of await readdir(contentDir)) {
-  if (!file.endsWith('.md')) continue
-  const slug = file.replace(/\.(en|es)\.md$/, '')
+  // Same rule as src/lib/posts.ts: only `<slug>.<lang>.md` is a post, so a
+  // CLAUDE.md sitting next to the content never becomes a route.
+  const named = /^(.+)\.(?:en|es)\.md$/.exec(file)
+  if (!named) continue
+  const slug = named[1]
   if (posts.some(p => p.slug === slug)) continue
   const raw = await readFile(join(contentDir, file), 'utf8')
   const date = /^date:\s*(\d{4}-\d{2}-\d{2})/m.exec(raw)?.[1]
