@@ -13,7 +13,9 @@ test.describe('blog index', () => {
     await gotoApp(page, '/blog')
 
     // Newest first on screen, so the numbers count down.
-    await expect(page.locator('.post-row').first()).toContainText('003')
+    await expect(page.locator('.post-row').first()).toContainText(
+      String(posts.length).padStart(3, '0')
+    )
     await expect(page.locator('.post-row').last()).toContainText('001')
   })
 
@@ -61,7 +63,8 @@ test.describe('blog post', () => {
     await gotoApp(page, `/blog/${posts[0].slug}`)
 
     const header = page.locator('article header')
-    await expect(header).toContainText('003')
+    // posts[0] is the newest, so it carries the highest number in the log.
+    await expect(header).toContainText(String(posts.length).padStart(3, '0'))
     await expect(header).toContainText(en.blog.minRead)
   })
 

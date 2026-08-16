@@ -37,6 +37,12 @@ export async function gotoApp(page: Page, path: string) {
 }
 
 export const posts = [
+  { slug: 'thirty-four-slides-to-three', title: 'Cutting 34 slides down to 3 is not summarising' },
+  { slug: 'two-renderers-one-deck', title: 'I shipped the same three slides twice, on purpose' },
+  { slug: 'same-module-twice', title: 'Writing the same native module twice tells you what your spec left out' },
+  { slug: 'webview-remount', title: 'Your WebView reloads because the source prop is a new object' },
+  { slug: 'see-what-you-generated', title: 'If you generate something visual, you need a way to look at it' },
+  { slug: 'deck-as-a-program', title: 'I stopped making slides and wrote a program that makes them' },
   { slug: 'hiring-mobile-engineers', title: 'What I look for when I interview a mobile engineer' },
   { slug: 'boring-releases', title: 'The best mobile release is the one nobody notices' },
   { slug: 'flatlist-jank', title: "Your FlatList isn't slow, your renderItem is" },
