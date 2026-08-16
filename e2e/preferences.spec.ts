@@ -1,4 +1,4 @@
-import { test, expect, en, es, gotoApp } from './fixtures'
+import { test, expect, en, es, gotoApp, untranslatedSlugs } from './fixtures'
 
 test.describe('theme', () => {
   test('starts light, switches to dark and survives a reload', async ({ page }) => {
@@ -83,10 +83,21 @@ test.describe('language', () => {
   })
 
   test('falls back to english and says so when there is no translation', async ({ page }) => {
+    const [slug] = untranslatedSlugs()
+    test.skip(!slug, 'every post is translated, so the banner has nothing to fire on')
+
     await page.addInitScript(() => localStorage.setItem('language', 'es'))
-    await page.goto('/blog/boring-releases')
+    await page.goto(`/blog/${slug}`)
 
     await expect(page.getByText(es.blog.onlyEnglish)).toBeVisible()
+  })
+
+  test('shows no english-only banner on a translated post', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('language', 'es'))
+    await page.goto('/blog/mape-k-loop')
+
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('MAPE-K')
+    await expect(page.getByText(es.blog.onlyEnglish)).toBeHidden()
   })
 
   test('theme and language are independent', async ({ page }) => {
