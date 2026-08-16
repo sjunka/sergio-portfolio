@@ -160,7 +160,38 @@ not for the phrasing of the title. Spanish translation, when there is one, is
 Posts are numbered automatically by date, oldest is 001. Dates spread out across the
 calendar; do not date six posts the same day.
 
-## 8. Before opening the PR
+## 8. Translations
+
+A translation is `<slug>.es.md` next to the English file, same slug and same `date`.
+`hiring-mobile-engineers.es.md` is the reference for register.
+
+What gets translated:
+
+- `title` and `summary`.
+- **`tags`.** They render as the filter pills in the Spanish index, so they are Spanish: `carrera`, `contratación`, `rendimiento`, `proceso`, `arquitectura`, `ciberfísicos`, `módulos-nativos`. `react-native` and `mobile` stay as they are, they are names.
+- **Every string inside a diagram**, and every `aria-label`, `alt` and `<figcaption>`. A Spanish post with English diagrams is a half-translated post.
+
+What does not:
+
+- Code blocks, identifiers, message type names, API names, error strings.
+- Terms the reader uses in English anyway: bug, fix, deploy, runtime, store, handshake, listener, safety case, tradeoff.
+
+Write Spanish that sounds written rather than translated. Reach for the natural
+phrasing over the parallel one, and prefer the informal register the English uses.
+
+### Spanish text is roughly 20% longer
+
+That is a geometry problem, not a prose problem. A label that fit at 640 units in
+English can overrun its box or collide with the next element. Rework the wording to fit
+before moving coordinates, and **run `scripts/preview-figures.mjs` on the `.es.md` file
+too**. Rough widths at the sizes in use: `dg-t` about 6.5px per character, `dg-s` about
+4.7px, `dg-m` about 5.5px.
+
+Adding a translation changes what the fallback tests can assert. `posts.test.ts` and
+`e2e/fixtures.ts` read the content directory to decide which slugs are untranslated, so
+they adjust on their own. Do not pin a slug in those tests.
+
+## 9. Before opening the PR
 
 1. `e2e/fixtures.ts` — add the post to the `posts` array, newest first, slug and exact title. The e2e suite counts and orders against this.
 2. `node scripts/preview-figures.mjs` on the post and actually look at it.
