@@ -261,7 +261,7 @@ export const en = {
     nextPost: 'Next',
     prevPost: 'Previous',
     writtenBy: 'Written by',
-    authorBio: 'Senior mobile engineer, 10+ years of React Native. Currently open to senior roles.',
+    authorBio: 'Software engineer and AI engineering lead. I design the contracts that make what agents build predictable, on mobile and in cyber-physical systems.',
     onlyEnglish: 'This post is only available in English.',
     tocLabel: 'On this page',
   },

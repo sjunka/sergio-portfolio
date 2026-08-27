@@ -52,6 +52,8 @@ export function untranslatedSlugs() {
 }
 
 export const posts = [
+  { slug: 'specs-pin-what-agents-guess', title: 'A spec an agent can build is one that pins what it would otherwise guess' },
+  { slug: 'parallel-agents-file-ownership', title: 'Parallel agents need file ownership, not better prompts' },
   { slug: 'adapt-cps-methodology', title: 'A process model where the contract exists before the code' },
   { slug: 'agile-waterfall-cyber-physical', title: 'Agile and waterfall both fail cyber-physical systems, from opposite ends' },
   { slug: 'one-contract-two-platforms', title: 'What a TurboModule spec cannot tell you' },
