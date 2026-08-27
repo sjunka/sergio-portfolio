@@ -238,6 +238,12 @@
 .prose img {
   @apply rounded-xl border border-border;
 }
+/* Rendered animations, unlike the inline SVG figures, cannot follow the theme:
+   they carry their own light background in dark mode too, the same deal the
+   Monokai code blocks get in light mode. */
+.prose video {
+  @apply block h-auto w-full rounded-xl border border-border;
+}
 .prose table {
   @apply w-full border-collapse text-[0.9375rem];
 }
