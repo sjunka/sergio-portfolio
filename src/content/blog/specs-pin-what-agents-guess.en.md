@@ -14,11 +14,11 @@ The gap is in shapes. Every place the code meets something it did not write, a t
 The generation provider returns a status document. The obvious guess for the image field is an array of URLs. What it actually sends is an array of objects:
 
 ```js
-// The guess. Reads fine, compiles, matches the test.
-const url = status.images[0]
-
 // What the provider sends.
-{ images: [{ url: "https://..." }], video: { url: "https://..." } }
+const status = { images: [{ url: 'https://...' }], video: { url: 'https://...' } }
+
+const guess = status.images[0] // an object, not a URL
+const url = status.images[0].url // what it had to be
 ```
 
 That is a one character fix and it is not the interesting part. The interesting part is that this shipped past a full green test suite, twice, with two different agents, because whoever writes the consuming code also writes the double. The mock returned `images: ["https://..."]` and the code read `images[0]`, and they agreed with each other completely. The suite was proving the code consistent with a provider that does not exist.

@@ -216,9 +216,24 @@
   @apply overflow-x-auto rounded-xl border border-border bg-card p-5 text-[0.8125rem] leading-relaxed;
 }
 .prose pre code {
-  @apply font-mono text-foreground/90;
+  @apply font-mono;
   /* Ligatures turn `=>` into a glyph that isn't the character readers will type. */
   font-variant-ligatures: none;
+}
+.prose pre code:not(.hljs) {
+  @apply text-foreground/90;
+}
+/* Highlighted blocks wear Monokai in both themes. A token colour that shifts
+   with the theme is a token colour the reader has to relearn, and the palette
+   is what makes a wrong line findable at a glance. The plate is the pre, so it
+   keeps the padding and the horizontal scroll; hljs only paints the tokens. */
+.prose pre:has(> code.hljs) {
+  /* Monokai's own background. */
+  background: #272822;
+  @apply border-transparent;
+}
+.prose pre > code.hljs {
+  @apply bg-transparent p-0;
 }
 .prose img {
   @apply rounded-xl border border-border;
