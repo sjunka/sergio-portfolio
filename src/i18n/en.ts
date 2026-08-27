@@ -59,7 +59,7 @@ export const en = {
       },
     },
     stats: {
-      years: 'Years Experience',
+      years: 'Shipping Since',
       industries: 'Industries',
       platforms: 'Platforms (iOS & Android)',
     },
@@ -68,7 +68,7 @@ export const en = {
   skills: {
     label: 'Core Skills',
     title: 'Technologies I work with',
-    description: 'A decade of hands-on experience across the full mobile and frontend stack.',
+    description: 'The stack I build with, from the mobile client to the agents that write against it.',
     categories: {
       Smartphone: 'Mobile & Core',
       Monitor: 'Frontend',
