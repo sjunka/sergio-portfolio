@@ -44,6 +44,31 @@ before drafting. They are the reference. What they do:
 Length: 700 to 900 words of body text. The originals are shorter; the newer ones run
 longer because they carry diagrams. Do not pad to hit a number.
 
+### Numbers carry their provenance
+
+A number with no setup is decoration. Say what was measured, over what, how many times.
+"Two real runs landed at 59s and 115s" survives a sceptical reader; "roughly a minute"
+does not. A target is not a measurement, and if the only honest figure is one you were
+told rather than saw, say who told you.
+
+### Say which claims you watched and which you are guessing
+
+Opinionated does not mean everything gets asserted flat. An observation and a hypothesis
+are different objects, and a post that mixes them spends the credit of the first on the
+second. Mark the guess as a guess, in one clause, and keep it in the same confident
+voice. This is not hedging: hedging is refusing to commit at all.
+
+### Answer the strongest objection inside the post
+
+Whatever a reader with the opposite experience would say, say it yourself, in the body,
+before the closing section. A post that only holds inside the writer's own conditions
+should name those conditions. The objection goes in as a real paragraph, not as a
+concession clause bolted onto a sentence that then rolls straight over it.
+
+Note what does not get borrowed from good posts elsewhere: the closing invitation to try
+it yourself, and bullet lists standing in for the paragraph the writer did not want to
+write. Both are still banned here, section 3.
+
 ## 3. Banned, mechanically
 
 Run these checks before shipping. Each one is a grep.
@@ -74,6 +99,49 @@ repo because it exists. A reader cannot learn anything from thirty lines of Swif
 
 `flatlist-jank.en.md` is the model: three snippets, each showing a mistake, each under
 ten lines. `hiring-mobile-engineers.en.md` has none and is not worse for it.
+
+### Every fence carries a language
+
+Code blocks render through `highlight.js` in the Monokai palette, wired up in
+`src/pages/BlogPost.tsx`. Colour is what lets a reader find the one wrong line without
+reading the whole snippet, so a fence with no language is a snippet the reader has to
+parse by hand. Registered: `js`, `ts`, `tsx`, `sh`, `yaml`. Fencing anything else falls
+back to `highlightAuto`, which guesses; add the grammar in `BlogPost.tsx` instead.
+
+Monokai is dark in both themes, deliberately. A token colour that changes meaning between
+light and dark is a token colour nobody learns.
+
+### The snippet has to be valid in the language you fenced it as
+
+The highlighter tokenises what you wrote, not what you meant. A fragment that is not a
+statement gets coloured as garbage, and the reader ends up decoding two things at once.
+This shipped and was wrong:
+
+```js
+// The guess. Reads fine, compiles, matches the test.
+const url = status.images[0]
+
+// What the provider sends.
+{ images: [{ url: "https://..." }], video: { url: "https://..." } }
+```
+
+Two problems. The second block is a bare object literal, which is a block statement with
+a label in real JavaScript, so it highlights as nonsense. And the pair is ordered wrong:
+the guess comes first, so the reader holds a wrong model in their head until the last
+line takes it away. Bind the fragment to a name and put the truth first:
+
+```js
+// What the provider sends.
+const status = { images: [{ url: 'https://...' }], video: { url: 'https://...' } }
+
+const guess = status.images[0] // an object, not a URL
+const url = status.images[0].url // what it had to be
+```
+
+Two `const url` lines would have been the same mistake again: a redeclaration is a
+syntax error, so name the wrong one something else. Same rule as prose: solution first, then the mistake as evidence. Comments inside a
+snippet are part of the argument, not decoration, so they carry the claim and stay to one
+line.
 
 If a thing is better shown than quoted, draw it. See below.
 
@@ -195,7 +263,7 @@ they adjust on their own. Do not pin a slug in those tests.
 
 1. `e2e/fixtures.ts` — add the post to the `posts` array, newest first, slug and exact title. The e2e suite counts and orders against this.
 2. `node scripts/preview-figures.mjs` on the post and actually look at it.
-3. `npm run build && npx vite preview --port 4173`, open the post, check it at desktop width and at 390px.
+3. `npm run build && npx vite preview --port 4173`, open the post, check it at desktop width and at 390px. Every code block should come out coloured; one that renders grey on the dark plate was fenced with a language nothing is registered for.
 4. `npm run test:all` — lint, typecheck, unit, e2e. All of it.
 5. Commit with `GIT_AUTHOR_DATE` and `GIT_COMMITTER_DATE` set to the post's date, so the history matches the publication dates.
 

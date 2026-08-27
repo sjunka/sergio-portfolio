@@ -4,6 +4,13 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowLeft, ArrowRight, Info } from 'lucide-react'
 import { marked } from 'marked'
+import { markedHighlight } from 'marked-highlight'
+import hljs from 'highlight.js/lib/core'
+import bash from 'highlight.js/lib/languages/bash'
+import javascript from 'highlight.js/lib/languages/javascript'
+import typescript from 'highlight.js/lib/languages/typescript'
+import yaml from 'highlight.js/lib/languages/yaml'
+import 'highlight.js/styles/monokai.css'
 import DOMPurify from 'dompurify'
 import { SEOHead } from '@/components/shared/SEOHead'
 import { LinkedInIcon, GitHubIcon } from '@/components/shared/BrandIcons'
@@ -13,6 +20,23 @@ import { formatDate, getPosts } from '@/lib/posts'
 import { prefersReducedMotion } from '@/lib/motion'
 
 gsap.registerPlugin(ScrollTrigger)
+
+// Only the languages the posts actually fence with, from `highlight.js/lib/core`
+// rather than the default build, which registers about 190 of them.
+hljs.registerLanguage('bash', bash)
+hljs.registerLanguage('javascript', javascript)
+hljs.registerLanguage('typescript', typescript)
+hljs.registerLanguage('yaml', yaml)
+// `tsx` is not one of the typescript grammar's own aliases.
+hljs.registerAliases(['tsx'], { languageName: 'typescript' })
+
+marked.use(
+  markedHighlight({
+    langPrefix: 'hljs language-',
+    highlight: (code, lang) =>
+      hljs.getLanguage(lang) ? hljs.highlight(code, { language: lang }).value : hljs.highlightAuto(code).value,
+  }),
+)
 
 marked.use({
   gfm: true,
