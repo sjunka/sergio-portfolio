@@ -261,7 +261,7 @@ export const es = {
     nextPost: 'Siguiente',
     prevPost: 'Anterior',
     writtenBy: 'Escrito por',
-    authorBio: 'Ingeniero mobile senior, más de 10 años con React Native. Abierto a roles senior.',
+    authorBio: 'Ingeniero de software y líder de ingeniería de IA. Diseño los contratos que hacen predecible lo que construyen los agentes, en móvil y en sistemas ciberfísicos.',
     onlyEnglish: 'Esta entrada solo está disponible en inglés.',
     tocLabel: 'En esta página',
   },
