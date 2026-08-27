@@ -59,7 +59,7 @@ export const es = {
       },
     },
     stats: {
-      years: 'Años de Experiencia',
+      years: 'Publicando Desde',
       industries: 'Industrias',
       platforms: 'Plataformas (iOS & Android)',
     },
@@ -68,7 +68,7 @@ export const es = {
   skills: {
     label: 'Habilidades',
     title: 'Tecnologías con las que trabajo',
-    description: 'Una década de experiencia práctica en el stack completo de mobile y frontend.',
+    description: 'El stack con el que construyo, desde el cliente móvil hasta los agentes que escriben contra él.',
     categories: {
       Smartphone: 'Mobile y Core',
       Monitor: 'Frontend',
