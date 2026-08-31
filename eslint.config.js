@@ -6,7 +6,9 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'coverage', 'playwright-report', 'test-results']),
+  // `scripts/animations` is Remotion source that renders in its own throwaway
+  // project, so remotion is not a dependency here and this config cannot lint it.
+  globalIgnores(['dist', 'coverage', 'playwright-report', 'test-results', 'scripts/animations']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
