@@ -52,6 +52,7 @@ export function untranslatedSlugs() {
 }
 
 export const posts = [
+  { slug: 'call-the-api-first', title: 'Call the API before you draw the architecture' },
   { slug: 'specs-pin-what-agents-guess', title: 'A spec an agent can build is one that pins what it would otherwise guess' },
   { slug: 'parallel-agents-file-ownership', title: 'Parallel agents need file ownership, not better prompts' },
   { slug: 'adapt-cps-methodology', title: 'A process model where the contract exists before the code' },
