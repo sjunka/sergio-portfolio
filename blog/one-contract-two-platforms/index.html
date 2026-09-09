@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Resolve language and theme before the first paint. A hardcoded class on
+      // <html> would flash the wrong theme at everyone whose choice differs.
+      (function () {
+        var el = document.documentElement;
+        var s = localStorage.getItem('language');
+        el.lang = s === 'en' || s === 'es' ? s : navigator.language.startsWith('es') ? 'es' : 'en';
+
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        el.classList.add(t);
+      })();
+    </script>
+    <meta name="theme-color" content="#0A0F1E" />
+
+    <title>What a TurboModule spec cannot tell you | Sergio Junca</title>
+    <meta name="description" content="Codegen guarantees both platforms have the same types. It has nothing to say about denied permissions, double taps, or who owns a system singleton, and that is where implementations quietly diverge." />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Sergio Junca" />
+
+    <!--
+      No static canonical here on purpose. SEOHead emits a per-route one, and on
+      React 19 react-helmet-async delegates to React's head hoisting, which does
+      not replace tags that were already in this file — a static canonical would
+      leave every URL serving two. The og/twitter tags below stay because social
+      crawlers don't run JS and would otherwise get no preview at all; they are
+      the home page's values until the site is prerendered.
+    -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/pwa-192.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="What a TurboModule spec cannot tell you | Sergio Junca" />
+    <meta property="og:description" content="Codegen guarantees both platforms have the same types. It has nothing to say about denied permissions, double taps, or who owns a system singleton, and that is where implementations quietly diverge." />
+    <meta property="og:url" content="https://sergiojunca.online/blog/one-contract-two-platforms/" />
+    <meta property="og:image" content="https://sergiojunca.online/blog/og/one-contract-two-platforms.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="What a TurboModule spec cannot tell you" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta property="article:published_time" content="2026-08-11" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="What a TurboModule spec cannot tell you | Sergio Junca" />
+    <meta name="twitter:description" content="Codegen guarantees both platforms have the same types. It has nothing to say about denied permissions, double taps, or who owns a system singleton, and that is where implementations quietly diverge." />
+    <meta name="twitter:image" content="https://sergiojunca.online/blog/og/one-contract-two-platforms.jpg" />
+    <meta name="twitter:image:alt" content="What a TurboModule spec cannot tell you" />
+    <script type="module" crossorigin src="/assets/index-D_hm2Ux3.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-BYbx6iT9.js">
+    <link rel="modulepreload" crossorigin href="/assets/motion-C1tg1Zn9.js">
+    <link rel="modulepreload" crossorigin href="/assets/personal-CzRyVP8b.js">
+    <link rel="modulepreload" crossorigin href="/assets/SEOHead-D4fb6oOS.js">
+    <link rel="modulepreload" crossorigin href="/assets/utils-BKL9qq-H.js">
+    <link rel="modulepreload" crossorigin href="/assets/motion-BeMMqoMR.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-DQ462m0n.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-CF2GWuZO.css">
+  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
