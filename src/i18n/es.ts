@@ -21,7 +21,7 @@ export const es = {
   hero: {
     badge: 'Disponible para Roles Senior & SSR',
     jobTitle: 'Ingeniero Mobile Senior',
-    tags: ['React Native', 'TypeScript', 'iOS & Android', '10+ Años'],
+    tags: ['React Native', 'TypeScript', 'iOS & Android', 'Agentes de IA'],
     descPre: 'Construyendo aplicaciones móviles multiplataforma de nivel productivo en ',
     descIndustries: 'fintech, gaming, salud y logística',
     descPost: ', desde la arquitectura hasta la App Store.',
@@ -38,8 +38,8 @@ export const es = {
     title: 'Creando experiencias mobile a escala',
     description: 'No solo escribo código — construyo sistemas, mentoreo equipos y entrego productos que viven en millones de bolsillos.',
     bio1Pre: 'Soy ',
-    bio1Strong: 'Ingeniero Mobile Senior',
-    bio1Post: ' con más de 10 años de experiencia construyendo y lanzando aplicaciones React Native de nivel productivo en fintech, gaming, salud y logística.',
+    bio1Strong: 'ingeniero de software y líder de ingeniería de IA',
+    bio1Post: ' que lanza React Native en producción en fintech, gaming, salud y logística, y hoy diseña las specs, los contratos y los límites con los que los agentes de IA construyen junto al equipo.',
     bio2: 'Mi experiencia abarca el ciclo de vida móvil completo, desde decisiones de arquitectura y sistemas de componentes escalables hasta pipelines de CI/CD, despliegues en la App Store y optimización de rendimiento. He liderado equipos de ingeniería, mentoreado desarrolladores y entregado funcionalidades en las que confían usuarios reales cada día.',
     bio3Pre: 'Soy ',
     bio3Strong: 'Licenciado en Ingeniería de Sistemas y Computación',
@@ -59,7 +59,7 @@ export const es = {
       },
     },
     stats: {
-      years: 'Años de Experiencia',
+      years: 'Publicando Desde',
       industries: 'Industrias',
       platforms: 'Plataformas (iOS & Android)',
     },
@@ -68,7 +68,7 @@ export const es = {
   skills: {
     label: 'Habilidades',
     title: 'Tecnologías con las que trabajo',
-    description: 'Una década de experiencia práctica en el stack completo de mobile y frontend.',
+    description: 'El stack con el que construyo, desde el cliente móvil hasta los agentes que escriben contra él.',
     categories: {
       Smartphone: 'Mobile y Core',
       Monitor: 'Frontend',
@@ -81,7 +81,7 @@ export const es = {
   },
   experience: {
     label: 'Experiencia',
-    title: '10+ años de ingeniería mobile',
+    title: 'El trabajo que salió a producción',
     description: 'Un historial de entrega de aplicaciones React Native de nivel productivo en diversas industrias y geografías.',
     contract: 'Contrato',
     fullTime: 'Tiempo Completo',
@@ -221,7 +221,7 @@ export const es = {
     eyebrow: 'Publicando apps desde 2014',
     headlineA: 'Construyo las apps',
     headlineB: 'que viven en tu bolsillo',
-    lede: 'Ingeniero mobile senior. React Native, iOS y Android, del primer commit a la ficha de la tienda. Diez años en fintech, gaming, salud y logística.',
+    lede: 'Ingeniero de software y líder de ingeniería de IA. React Native, iOS y Android, del primer commit a la ficha de la tienda. Ahora construyo las specs, los agentes y los bucles de feedback que aceleran lo siguiente.',
     readWriting: 'Leer el blog',
     aboutMe: 'Sobre mí',
     phoneLabel: 'Pantalla de inicio interactiva — cada app abre una sección de este sitio',

@@ -14,11 +14,11 @@ La diferencia está en las formas. En cada lugar donde el código se encuentra c
 El proveedor de generación devuelve un documento de estado. Lo obvio de adivinar para el campo de la imagen es un arreglo de URLs. Lo que manda de verdad es un arreglo de objetos:
 
 ```js
-// La suposición. Se lee bien, compila, pasa el test.
-const url = status.images[0]
-
 // Lo que el proveedor manda.
-{ images: [{ url: "https://..." }], video: { url: "https://..." } }
+const status = { images: [{ url: 'https://...' }], video: { url: 'https://...' } }
+
+const guess = status.images[0] // un objeto, no una URL
+const url = status.images[0].url // lo que tenía que ser
 ```
 
 Ese es un arreglo de un caracter y no es la parte interesante. La parte interesante es que esto pasó por una suite entera en verde, dos veces, con dos agentes distintos, porque quien escribe el código que consume también escribe el doble. El mock devolvía `images: ["https://..."]` y el código leía `images[0]`, y coincidían el uno con el otro perfectamente. La suite estaba probando que el código era consistente con un proveedor que no existe.

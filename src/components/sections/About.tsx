@@ -72,7 +72,7 @@ export function About() {
   ];
 
   const stats = [
-    { value: '10+', label: t.about.stats.years },
+    { value: '2014', label: t.about.stats.years },
     { value: '5+', label: t.about.stats.industries },
     { value: '2', label: t.about.stats.platforms },
   ];

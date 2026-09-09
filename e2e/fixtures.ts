@@ -53,6 +53,8 @@ export function untranslatedSlugs() {
 
 export const posts = [
   { slug: 'call-the-api-first', title: 'Call the API before you draw the architecture' },
+  { slug: 'domain-expert-as-a-role', title: 'The coffee farmer is a role in our process, not a stakeholder we consult' },
+  { slug: 'process-diagrams-are-views', title: 'A process diagram is a view of a model, not a drawing' },
   { slug: 'specs-pin-what-agents-guess', title: 'A spec an agent can build is one that pins what it would otherwise guess' },
   { slug: 'parallel-agents-file-ownership', title: 'Parallel agents need file ownership, not better prompts' },
   { slug: 'adapt-cps-methodology', title: 'A process model where the contract exists before the code' },
