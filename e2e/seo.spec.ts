@@ -33,7 +33,7 @@ test.describe('metadata', () => {
       // bust the preview caches, and that rename shouldn't be a test edit.
       await expect(page.locator('meta[property="og:image"]').last()).toHaveAttribute(
         'content',
-        new RegExp(`^${site}[\\w-]+\\.jpg$`)
+        new RegExp(`^${site}(blog/og/)?[\\w-]+\\.jpg$`)
       )
       await expect(page.locator('meta[property="og:image:alt"]').last()).toHaveAttribute('content', /.+/)
       await expect(page.locator('meta[property="og:url"]').last()).toHaveAttribute('content', canonical)
@@ -81,6 +81,25 @@ test.describe('crawlability', () => {
     for (const loc of xml.match(/<loc>([^<]+)<\/loc>/g) ?? []) {
       expect(loc).toMatch(/\/<\/loc>$/)
     }
+  })
+
+  /*
+   * The crawler view: LinkedIn, X and WhatsApp read the HTML as served and never
+   * run the app, so a post's card comes from what postbuild wrote into the file,
+   * not from what SEOHead sets once React mounts.
+   */
+  test('the served HTML of a post already carries its own title and card', async ({ request }) => {
+    const res = await request.get(`/blog/${posts[0].slug}/`)
+    const html = await res.text()
+
+    expect(html).toContain(`<title>${posts[0].title} | Sergio Junca</title>`)
+    expect(html).toContain(`<meta property="og:type" content="article" />`)
+    expect(html).toContain(`content="${site}blog/og/${posts[0].slug}.jpg"`)
+    expect(html).toContain(`content="${site}blog/${posts[0].slug}/"`)
+
+    const card = await request.get(`/blog/og/${posts[0].slug}.jpg`)
+    expect(card.status()).toBe(200)
+    expect(card.headers()['content-type']).toContain('image/jpeg')
   })
 
   test('serves a 404.html fallback for the SPA', async ({ request }) => {
