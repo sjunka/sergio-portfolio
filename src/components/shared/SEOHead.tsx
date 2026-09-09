@@ -53,10 +53,16 @@ export function SEOHead({ title, description, path, article }: SEOHeadProps = {}
   // Pages serves these routes as directories and 301s to the trailing-slash form,
   // so the canonical has to match or it fights the redirect.
   const url = path ? `${personal.siteUrl}${path}/` : personal.siteUrl
-  // Filename is versioned on purpose: WhatsApp and LinkedIn cache a preview by
-  // image URL for weeks, so a redesign only ships if the URL changes with it.
-  const image = `${personal.siteUrl}share-card.jpg`
-  const imageAlt = 'Sergio Junca, senior software engineer — ten years shipping production apps'
+  // Posts carry their own card, written by `npm run og` and injected into the
+  // static HTML by scripts/postbuild.mjs, which is the copy a social crawler
+  // actually reads. This keeps the runtime tags saying the same thing.
+  const postSlug = article && path?.startsWith('blog/') ? path.slice('blog/'.length) : null
+  const image = postSlug
+    ? `${personal.siteUrl}blog/og/${postSlug}.jpg`
+    : `${personal.siteUrl}share-card.jpg`
+  const imageAlt = postSlug
+    ? pageTitle
+    : 'Sergio Junca, senior software engineer — ten years shipping production apps'
 
   const schema = article
     ? {

@@ -259,13 +259,35 @@ Adding a translation changes what the fallback tests can assert. `posts.test.ts`
 `e2e/fixtures.ts` read the content directory to decide which slugs are untranslated, so
 they adjust on their own. Do not pin a slug in those tests.
 
-## 9. Before opening the PR
+## 9. The share card
 
-1. `e2e/fixtures.ts` — add the post to the `posts` array, newest first, slug and exact title. The e2e suite counts and orders against this.
-2. `node scripts/preview-figures.mjs` on the post and actually look at it.
-3. `npm run build && npx vite preview --port 4173`, open the post, check it at desktop width and at 390px. Every code block should come out coloured; one that renders grey on the dark plate was fenced with a language nothing is registered for.
-4. `npm run test:all` — lint, typecheck, unit, e2e. All of it.
-5. Commit with `GIT_AUTHOR_DATE` and `GIT_COMMITTER_DATE` set to the post's date, so the history matches the publication dates.
+Every post ships a 1200x630 card at `public/blog/og/<slug>.jpg`. It is what LinkedIn,
+X and WhatsApp show when the URL is pasted, and it is generated, never drawn by hand:
+
+```sh
+npm run og
+```
+
+That renders `scripts/og-post.html` once per `.en.md` file, filling in the title, the
+summary and the date, and rewrites the site card too. One card per slug, English titles,
+shared by both languages. Commit the jpg.
+
+`scripts/postbuild.mjs` writes those values into each post's static `index.html`. Social
+crawlers do not run JavaScript, so the tags `SEOHead` sets at runtime never reach them;
+the file as served is the preview. The build throws if a post has no card, which is the
+only reminder that `npm run og` exists.
+
+A card is cached by its URL for weeks. Changing the design of an already shared post
+means changing the filename too, or the old preview keeps showing.
+
+## 10. Before opening the PR
+
+1. `npm run og`, then look at `public/blog/og/<slug>.jpg`. A title that overruns the card is a title the length steps in `scripts/og.mjs` did not cover.
+2. `e2e/fixtures.ts` — add the post to the `posts` array, newest first, slug and exact title. The e2e suite counts and orders against this.
+3. `node scripts/preview-figures.mjs` on the post and actually look at it.
+4. `npm run build && npx vite preview --port 4173`, open the post, check it at desktop width and at 390px. Every code block should come out coloured; one that renders grey on the dark plate was fenced with a language nothing is registered for.
+5. `npm run test:all` — lint, typecheck, unit, e2e. All of it.
+6. Commit with `GIT_AUTHOR_DATE` and `GIT_COMMITTER_DATE` set to the post's date, so the history matches the publication dates.
 
 The sitemap, the prerendered route and the reading time are all generated. Nothing to
 update by hand.
