@@ -277,6 +277,11 @@ crawlers do not run JavaScript, so the tags `SEOHead` sets at runtime never reac
 the file as served is the preview. The build throws if a post has no card, which is the
 only reminder that `npm run og` exists.
 
+A post can carry art on its card: put a portrait image at `scripts/og-art/<slug>.jpg`
+and `npm run og` bleeds it into the right edge, the way the site card does with the
+portrait, and steps the title down for the narrower column. Dark art only; the card is
+`#080d1a`. Posts without a file there get the plain card.
+
 A card is cached by its URL for weeks. Changing the design of an already shared post
 means changing the filename too, or the old preview keeps showing.
 

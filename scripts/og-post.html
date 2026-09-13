@@ -3,6 +3,7 @@
   Template for the per-post share card. `npm run og` substitutes {{title}},
   the title, summary and date, renders it, and writes public/blog/og/<slug>.jpg.
   Never edited by hand for one post: change it here and re-run for all of them.
+  A post with art in scripts/og-art/<slug>.jpg gets it as a panel on the right.
 -->
 <html lang="en">
   <head>
@@ -114,6 +115,31 @@
         overflow: hidden;
       }
 
+      /* ── Art: optional, bled into the right edge like the site card's portrait ──
+         Masking its left side to transparent keeps it part of the background
+         rather than a picture pasted next to the type. */
+      .art {
+        position: absolute;
+        inset: 0 0 0 auto;
+        width: 520px;
+        overflow: hidden;
+      }
+      .art img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 45%;
+        mask-image: linear-gradient(90deg, transparent, #000 38%);
+      }
+      .with-art .card {
+        width: 790px;
+        padding-right: 40px;
+      }
+      .with-art .summary {
+        font-size: 22px;
+        -webkit-line-clamp: 4;
+      }
+
       footer {
         margin-top: auto;
         display: flex;
@@ -152,9 +178,10 @@
       }
     </style>
   </head>
-  <body>
+  <body class="{{variant}}">
     <div class="glow"></div>
     <div class="grid"></div>
+    {{art}}
 
     <div class="card">
       <p class="eyebrow">sergiojunca.online <b>/ blog</b></p>

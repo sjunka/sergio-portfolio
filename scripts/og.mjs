@@ -10,6 +10,7 @@
  */
 import { chromium } from '@playwright/test'
 import { pathToFileURL } from 'node:url'
+import { existsSync } from 'node:fs'
 import { mkdir, readdir, readFile, unlink, writeFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 
@@ -32,12 +33,14 @@ const escape = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g,
 
 /**
  * One font size for every title makes the short ones timid and clips the long
- * ones. Three steps, chosen by length, keeps all of them inside the card.
+ * ones. Three steps, chosen by length, keeps all of them inside the card. A card
+ * with art has a narrower text column, so it steps down sooner.
  */
-function titleSize(title) {
-  if (title.length <= 42) return '76px'
-  if (title.length <= 68) return '62px'
-  return '52px'
+function titleSize(title, art) {
+  const [short, medium, long] = art ? ['64px', '52px', '46px'] : ['76px', '62px', '52px']
+  if (title.length <= 42) return short
+  if (title.length <= 68) return medium
+  return long
 }
 
 const browser = await chromium.launch()
@@ -69,8 +72,11 @@ for (const file of await readdir(contentDir)) {
     year: 'numeric',
     timeZone: 'UTC',
   })
+  const art = existsSync(`scripts/og-art/${slug}.jpg`)
   const html = template
-    .replaceAll('{{titleSize}}', titleSize(meta.title ?? ''))
+    .replaceAll('{{variant}}', art ? 'with-art' : '')
+    .replaceAll('{{art}}', art ? `<div class="art"><img src="og-art/${slug}.jpg" alt="" /></div>` : '')
+    .replaceAll('{{titleSize}}', titleSize(meta.title ?? '', art))
     .replaceAll('{{title}}', escape(meta.title ?? ''))
     .replaceAll('{{summary}}', escape(meta.summary ?? ''))
     .replaceAll('{{stamp}}', escape(stamp))
