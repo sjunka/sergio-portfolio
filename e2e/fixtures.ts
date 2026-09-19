@@ -52,6 +52,8 @@ export function untranslatedSlugs() {
 }
 
 export const posts = [
+  { slug: 'carpeta-ciudadana-architecture', title: "We didn't choose eleven microservices, the requirements did" },
+  { slug: 'carpeta-ciudadana-requirements', title: 'The center of a document federation should be a phone book, not a bus' },
   { slug: 'call-the-api-first', title: 'Call the API before you draw the architecture' },
   { slug: 'domain-expert-as-a-role', title: 'The coffee farmer is a role in our process, not a stakeholder we consult' },
   { slug: 'process-diagrams-are-views', title: 'A process diagram is a view of a model, not a drawing' },
