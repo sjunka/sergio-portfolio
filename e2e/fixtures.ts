@@ -52,6 +52,9 @@ export function untranslatedSlugs() {
 }
 
 export const posts = [
+  { slug: 'reachable-is-not-authorized', title: "Reaching a resource in AWS doesn't mean you're allowed to use it" },
+  { slug: 'accuracy-hides-the-minority', title: 'A stroke model with 95% accuracy that finds nobody' },
+  { slug: 'carpeta-operator-transfer', title: 'When a citizen changes operator, delete last' },
   { slug: 'carpeta-ciudadana-architecture', title: "We didn't choose eleven microservices, the requirements did" },
   { slug: 'carpeta-ciudadana-requirements', title: 'The center of a document federation should be a phone book, not a bus' },
   { slug: 'call-the-api-first', title: 'Call the API before you draw the architecture' },
