@@ -105,7 +105,7 @@ ten lines. `hiring-mobile-engineers.en.md` has none and is not worse for it.
 Code blocks render through `highlight.js` in the Monokai palette, wired up in
 `src/pages/BlogPost.tsx`. Colour is what lets a reader find the one wrong line without
 reading the whole snippet, so a fence with no language is a snippet the reader has to
-parse by hand. Registered: `js`, `ts`, `tsx`, `sh`, `yaml`. Fencing anything else falls
+parse by hand. Registered: `js`, `ts`, `tsx`, `sh`, `yaml`, `json`, `py`. Fencing anything else falls
 back to `highlightAuto`, which guesses; add the grammar in `BlogPost.tsx` instead.
 
 Monokai is dark in both themes, deliberately. A token colour that changes meaning between
