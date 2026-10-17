@@ -52,6 +52,7 @@ export function untranslatedSlugs() {
 }
 
 export const posts = [
+  { slug: 'marketplace-same-five-failures', title: 'Silk Road and Coupang failed in the same five places' },
   { slug: 'broken-access-control-decoy', title: 'The cookie was a decoy, the missing check was the bug' },
   { slug: 'reachable-is-not-authorized', title: "Reaching a resource in AWS doesn't mean you're allowed to use it" },
   { slug: 'accuracy-hides-the-minority', title: 'A stroke model with 95% accuracy that finds nobody' },
