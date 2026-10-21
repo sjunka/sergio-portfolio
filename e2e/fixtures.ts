@@ -52,6 +52,7 @@ export function untranslatedSlugs() {
 }
 
 export const posts = [
+  { slug: 'transactional-outbox', title: 'An event published after the commit is an event you can lose' },
   { slug: 'marketplace-same-five-failures', title: 'Silk Road and Coupang failed in the same five places' },
   { slug: 'broken-access-control-decoy', title: 'The cookie was a decoy, the missing check was the bug' },
   { slug: 'reachable-is-not-authorized', title: "Reaching a resource in AWS doesn't mean you're allowed to use it" },
