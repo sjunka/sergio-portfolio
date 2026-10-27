@@ -52,6 +52,7 @@ export function untranslatedSlugs() {
 }
 
 export const posts = [
+  { slug: 'model-beats-rule-by-one-case', title: 'My model beat the rule by one case in fifty, and I can defend that' },
   { slug: 'injectable-is-not-writable', title: 'Injectable does not mean writable' },
   { slug: 'transactional-outbox', title: 'An event published after the commit is an event you can lose' },
   { slug: 'marketplace-same-five-failures', title: 'Silk Road and Coupang failed in the same five places' },
