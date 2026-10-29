@@ -285,7 +285,33 @@ portrait, and steps the title down for the narrower column. Dark art only; the c
 A card is cached by its URL for weeks. Changing the design of an already shared post
 means changing the filename too, or the old preview keeps showing.
 
-## 10. Before opening the PR
+## 10. The takeaway
+
+Every post ends with one thing the reader can take away and use today, so the three
+minutes leave them with more than an opinion. It sits after the last argument and before
+nothing else. It is the closer, or the closer follows it in one flat sentence.
+
+Pick one, whichever is the sharpest for the subject:
+
+- A prompt, in a fenced block, copy-paste ready and tested against the claim the post makes.
+- A chart or diagram that stands alone: a decision table, a checklist drawn as a figure, a before and after.
+- A link to a primary source, tool or repo that goes further than the post could. One link, with a sentence on why it is worth the click.
+- A short checklist or template the reader can paste into their own doc or PR.
+
+Rules:
+
+- It must work without reading the post. Test it cold: would someone who skipped to the bottom still get value?
+- It follows from the post's own content. No unrelated freebie, no newsletter, no "follow me".
+- One item, not a menu. Three links is a link dump.
+- Heading is a plain label of what it is: `A prompt for this`, `The checklist`, `Where to read more`. Not "Take it with you".
+- Introduce it in one sentence of context, then give it. No "I hope this helps", no "try it yourself". This is a thing handed over, not an invitation (see section 2).
+- Prompts and templates go in a fence with a language (`text` is fine for prose prompts; add the grammar in `BlogPost.tsx` if highlight guesses wrong). A checklist counts as the real-list exception to the bullet ban only when each item is a short imperative, not an explained claim.
+- Spanish: translate the prompt text too, unless the prompt targets an English-only tool. Links stay as they are, with the sentence around them translated.
+- Word budget: it counts toward the 700 to 900 words, keep it under about 120.
+
+## 11. Before opening the PR
+
+0. The post has a takeaway (section 10) and it passes the cold test.
 
 1. `npm run og`, then look at `public/blog/og/<slug>.jpg`. A title that overruns the card is a title the length steps in `scripts/og.mjs` did not cover.
 2. `e2e/fixtures.ts` — add the post to the `posts` array, newest first, slug and exact title. The e2e suite counts and orders against this.
