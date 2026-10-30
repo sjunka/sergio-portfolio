@@ -9,6 +9,7 @@ import hljs from 'highlight.js/lib/core'
 import bash from 'highlight.js/lib/languages/bash'
 import javascript from 'highlight.js/lib/languages/javascript'
 import json from 'highlight.js/lib/languages/json'
+import plaintext from 'highlight.js/lib/languages/plaintext'
 import python from 'highlight.js/lib/languages/python'
 import typescript from 'highlight.js/lib/languages/typescript'
 import yaml from 'highlight.js/lib/languages/yaml'
@@ -28,6 +29,7 @@ gsap.registerPlugin(ScrollTrigger)
 hljs.registerLanguage('bash', bash)
 hljs.registerLanguage('javascript', javascript)
 hljs.registerLanguage('json', json)
+hljs.registerLanguage('plaintext', plaintext)
 hljs.registerLanguage('python', python)
 hljs.registerLanguage('typescript', typescript)
 hljs.registerLanguage('yaml', yaml)

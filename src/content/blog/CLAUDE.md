@@ -105,7 +105,7 @@ ten lines. `hiring-mobile-engineers.en.md` has none and is not worse for it.
 Code blocks render through `highlight.js` in the Monokai palette, wired up in
 `src/pages/BlogPost.tsx`. Colour is what lets a reader find the one wrong line without
 reading the whole snippet, so a fence with no language is a snippet the reader has to
-parse by hand. Registered: `js`, `ts`, `tsx`, `sh`, `yaml`, `json`, `py`. Fencing anything else falls
+parse by hand. Registered: `js`, `ts`, `tsx`, `sh`, `yaml`, `json`, `py`, `text` (plain, uncoloured). Fencing anything else falls
 back to `highlightAuto`, which guesses; add the grammar in `BlogPost.tsx` instead.
 
 Monokai is dark in both themes, deliberately. A token colour that changes meaning between
@@ -305,7 +305,7 @@ Rules:
 - One item, not a menu. Three links is a link dump.
 - Heading is a plain label of what it is: `A prompt for this`, `The checklist`, `Where to read more`. Not "Take it with you".
 - Introduce it in one sentence of context, then give it. No "I hope this helps", no "try it yourself". This is a thing handed over, not an invitation (see section 2).
-- Prompts and templates go in a fence with a language (`text` is fine for prose prompts; add the grammar in `BlogPost.tsx` if highlight guesses wrong). A checklist counts as the real-list exception to the bullet ban only when each item is a short imperative, not an explained claim.
+- Prompts and templates go in a fence with a language (`text` is fine for prose prompts and templates). A checklist counts as the real-list exception to the bullet ban only when each item is a short imperative, not an explained claim.
 - Spanish: translate the prompt text too, unless the prompt targets an English-only tool. Links stay as they are, with the sentence around them translated.
 - Word budget: it counts toward the 700 to 900 words, keep it under about 120.
 
